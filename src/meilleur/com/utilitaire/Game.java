@@ -16,7 +16,9 @@ public class Game {
             board.createBoard();
             board.printMap();
             p1.initStuff();
-            p1.printStuff();
+            p1.printStuff();;
+            p2.initStuff();
+            p2.printStuff();
 
         }
     }
