@@ -6,6 +6,12 @@ public class Pion {
     private int posX, posY;
     private boolean alive = true;
 
+    public Pion(char p, int x, int y) {
+        this.Letter = p;
+        this.posX = x;
+        this.posY = y;
+    }
+
     public boolean isAlive() {
         return alive;
     }
@@ -36,6 +42,11 @@ public class Pion {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    @Override
+    public String toString() {
+        return "Jsuis un Pion";
     }
 }
 
