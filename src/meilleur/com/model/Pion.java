@@ -37,6 +37,11 @@ public class Pion {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
+    @Override
+    public String toString() {
+        return "Jsuis un Pion";
+    }
 }
 
 /*
