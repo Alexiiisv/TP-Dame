@@ -4,10 +4,14 @@ import meilleur.com.model.Board;
 
 public class Game {
 
-    public void newGame() {
-        System.out.println("TP - Échecs \n");
+        Function function = new Function();
         Board board = new Board();
-        board.CreateBoard();
-        board.printMap();
+
+    public void newGame() {
+        function.mainMenu();
+        if (function.choix()) {
+            board.createBoard();
+            board.printMap();
+        }
     }
 }
