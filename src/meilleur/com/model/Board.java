@@ -4,10 +4,11 @@ import java.util.Arrays;
 
 public class Board {
     private int numb = 0;
-    private int L = 10;
-    private int H = 10;
+    private final int L = 10;
+    private final int H = 10;
     private char[][] map = new char[L][H];
-    public void CreateBoard(){
+
+    public void createBoard(){
         for (char[] col : map) {
             Arrays.fill(col, '.');
             }
