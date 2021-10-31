@@ -61,8 +61,12 @@ public class Player {
 
     public void printStuff() {
         System.out.println("voici les pions du joueurs " + this.id + "\n");
+        int i = 0;
         for (Pion p : this.stuff) {
-            if (p.isAlive()) System.out.println(p.toString());
+            if (p.isAlive()) {
+                i++;
+                System.out.println(i + " " + p.toString());
+            }
         }
         System.out.println();
     }
@@ -83,6 +87,14 @@ public class Player {
             if (pion.getPosY() == lastY && pion.getPosX() == lastX) {
                 pion.setPosX(newX);
                 pion.setPosY(newY);
+                break;
+            }
+        }
+    }
+    public void updatePionLive(int y, int x) {
+        for (Pion pion: this.stuff) {
+            if (pion.getPosY() == y && pion.getPosX() == x) {
+                pion.setAlive(false);
                 break;
             }
         }

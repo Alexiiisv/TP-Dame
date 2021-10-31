@@ -15,7 +15,8 @@ public class Game {
            initGame();
             while (true) {
                 board.printMap();
-                board.move(getPlayer(function.playerSwitch()));
+                boolean player = function.playerSwitch();
+                board.move(getPlayer(player), getPlayer(!player));
             }
         }
     }

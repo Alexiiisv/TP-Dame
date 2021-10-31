@@ -32,8 +32,7 @@ public class Function {
     }
 
     public boolean playerSwitch() {
-        String player1 = "Joueur 1";
-        String player2 = "Joueur 2";
+        String player1 = "Joueur 1", player2 = "Joueur 2";
         if (whoPlays) {
             System.out.println("Joueur 2 c'est a vous ! (P)");
             //Function to check if the game ended to add here

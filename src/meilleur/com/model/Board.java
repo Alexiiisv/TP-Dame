@@ -14,7 +14,6 @@ public class Board {
 
     public void createBoard(){
         for (char[] col : map) {
-            //Arrays.fill(col, '.');
 
             for (int i = 0; i < col.length; i++) {
                 if (numb%2 == 0 && pos%2 == 1 || numb%2 == 1 && pos%2 == 0) {
@@ -46,7 +45,7 @@ public class Board {
         System.out.println();
     }
 
-    public void move(Player player) {
+    public void move(Player player1, Player player2) {
         boolean falseInput = true;
         Scanner scanner = new Scanner(System.in);
         while (falseInput){
@@ -54,22 +53,36 @@ public class Board {
             input = scanner.nextLine();
             if (input.matches("[0-9][0-9] [0-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")){
                 falseInput = false;
-                if (player.movePion(input)) {
-                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(2), player);
+                if (player1.movePion(input)) {
+                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
                 }
             }
-            else if (input.equals("p")) player.printStuff();
-            else if (input.equals("q")) System.exit(1);
+            else if (input.equals("p") || input.equals("P")) player1.printStuff();
+            else if (input.equals("q") || input.equals("Q")) System.exit(1);
         }
     }
-    private void movePionToPosition(int lastX, int lastY, String pos, Player player) {
-        map[lastY][lastX] = '_';
+    private void movePionToPosition(int lastX, int lastY, String pos, Player player1, Player player2) {
         String[] split = pos.split("");
-        int newX = split[3].equals("L") ? lastX-Integer.parseInt(split[1]) : lastX+Integer.parseInt(split[1]);
-        int newY = split[2].equals("T") ? lastY-Integer.parseInt(split[1]) : lastY+Integer.parseInt(split[1]);
-        player.updatePion(lastY, lastX, newX, newY);
-        map[newY][newX] = player.getLetter();
+        int newX = split[2].equals("L") ? lastX-Integer.parseInt(split[0]) : lastX+Integer.parseInt(split[0]);
+        int newY = split[1].equals("T") ? lastY-Integer.parseInt(split[0]) : lastY+Integer.parseInt(split[0]);
+        System.out.println(map[newY][newX]);
+        if (map[newY][newX] == '_') {
+            map[lastY][lastX] = '_';
+            player1.updatePion(lastY, lastX, newX, newY);
+            map[newY][newX] = player1.getLetter();
+        }
+        else if (map[newY][newX] != '_') {
+            map[newY][newX] = '_';
+            player2.updatePionLive(newY, newX);
+            newX = split[2].equals("L") ? lastX-(Integer.parseInt(split[0])*2) : lastX+(Integer.parseInt(split[0])*2);
+            newY = split[1].equals("T") ? lastY-(Integer.parseInt(split[0])*2) : lastY+(Integer.parseInt(split[0])*2);
+            System.out.println(newY + "" + newX);
+            map[lastY][lastX] = '_';
+            player1.updatePion(lastY, lastX, newX, newY);
+            map[newY][newX] = player1.getLetter();
+        }
     }
+
     public String ReturnMove(){
         return input;
     }
