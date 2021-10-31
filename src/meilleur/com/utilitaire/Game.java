@@ -10,7 +10,7 @@ public class Game {
         Player p2 = new Player(1);
 
     public void newGame() {
-        function.mainMenu();
+       function.mainMenu();
         if (function.choix()) {
            initGame();
             while (true) {
@@ -26,6 +26,7 @@ public class Game {
     }
 
     public void initGame() {
+        function.FileCreateReadWrite();
         board.createBoard();
         p1.initStuff();
         p2.initStuff();

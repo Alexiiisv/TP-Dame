@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
+
+    private String Moves;
     private int numb = 0, pos = 0;
     private final int L = 10;
     private final int H = 10;
@@ -47,6 +49,7 @@ public class Board {
     public void move(Player player) {
         boolean falseInput = true;
         Scanner scanner = new Scanner(System.in);
+        Moves = scanner.nextLine();
         while (falseInput){
             System.out.println("Que souhaitez vous faire ?");
             String input = scanner.nextLine();
@@ -65,6 +68,9 @@ public class Board {
         lastY = split[2].equals("T") ? lastY-Integer.parseInt(split[1]) : lastY+Integer.parseInt(split[1]);
         lastX = split[3].equals("L") ? lastX-Integer.parseInt(split[1]) : lastX+Integer.parseInt(split[1]);
         map[lastY][lastX] = c;
+    }
+    public String ReturnMove(){
+        return Moves;
     }
 
 }

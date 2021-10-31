@@ -1,10 +1,18 @@
 package meilleur.com.utilitaire;
 
+import meilleur.com.model.Board;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Function {
-
     public boolean whoPlays = true;
+    Board board = new Board();
+
     public void mainMenu() {
         System.out.println("\t\tTP - Dame\n\n");
         System.out.println("Ce jeu a été créer par Yohan MOREN et Alexis VELLEINE.");
@@ -22,6 +30,7 @@ public class Function {
         String reponse = scanner.nextLine();
         return reponse.equals("yes") || reponse.equals("y") || reponse.equals("oui") || reponse.equals("o") || (reponse.equals("no") ? false : false);
     }
+
     public boolean playerSwitch() {
         String player1 = "Joueur 1";
         String player2 = "Joueur 2";
@@ -37,4 +46,30 @@ public class Function {
             return true;
         }
     }
+    public void FileCreateReadWrite() {
+        String data;
+        try {
+            if (board.ReturnMove() == null) {
+                data = "Voici les déplacements réalisés lors de la partie";
+            } else {
+               data = board.ReturnMove();
+            }
+
+            File f1 = new File("Moves.txt");
+            if (!f1.exists()) {
+                f1.createNewFile();
+            } else {
+                f1.delete();
+                f1.createNewFile();
+            }
+            FileWriter fileWritter = new FileWriter(f1.getName(),true);
+            BufferedWriter bw = new BufferedWriter(fileWritter);
+            bw.write(data);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+
