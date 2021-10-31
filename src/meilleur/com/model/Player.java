@@ -1,13 +1,18 @@
 package meilleur.com.model;
 
+import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player {
-    private int id;
+    private final int id;
     private ArrayList<Pion> stuff = new ArrayList<>();
+    private final char letter;
 
     public Player(int id) {
         this.id = id;
+        this.letter = id == 1 ? 'P' : 'p';
     }
 
     public ArrayList<Pion> getStuff() {
@@ -16,6 +21,14 @@ public class Player {
 
     public void setStuff(ArrayList<Pion> stuff) {
         this.stuff = stuff;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public char getLetter() {
+        return letter;
     }
 
     public void initStuff() {
@@ -29,8 +42,8 @@ public class Player {
             if (y%2 == 1 && x < 10) x += 2;
             if (y%2 == 0 && x < 11) x += 2;
 
-            if (id == 1) this.stuff.add(new Pion('P', x-2, y));
-            else this.stuff.add(new Pion('p', x-2, y));
+            if (id == 1) this.stuff.add(new Pion(this.letter, x-2, y));
+            else this.stuff.add(new Pion(this.letter, x-2, y));
 
 
             if (i%5 == 0 && x == 11 || x == 10) y++;
@@ -38,19 +51,31 @@ public class Player {
         }
     }
 
+    public int countAlive() {
+        int count = 0;
+        for (Pion p : this.stuff) {
+            if (p.isAlive()) count++;
+        }
+        return count;
+    }
+
     public void printStuff() {
         System.out.println("voici les pions du joueurs " + this.id + "\n");
-        for (Pion o : this.stuff) {
-            System.out.println(o.toString());
+        for (Pion p : this.stuff) {
+            if (p.isAlive()) System.out.println(p.toString());
         }
         System.out.println();
     }
-
-    public int getId() {
-        return id;
+    public boolean movePion(String move) {
+        boolean test = true;
+        String[] resultMove = move.split("");
+        for (Pion pion: this.stuff) {
+            if (pion.getPosY() == Integer.parseInt(resultMove[0]) && pion.getPosX() == Integer.parseInt(resultMove[1])) {
+                System.out.println(Arrays.toString(resultMove));
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

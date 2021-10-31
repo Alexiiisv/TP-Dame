@@ -12,14 +12,24 @@ public class Game {
     public void newGame() {
         function.mainMenu();
         if (function.choix()) {
-            board.createBoard();
-            p1.initStuff();
-            p2.initStuff();
-            board.placePion(p1.getStuff());
-            board.placePion(p2.getStuff());
-            board.printMap();
-            function.playerSwitch();
-
+           initGame();
+            while (true) {
+                board.printMap();
+                board.move(getPlayer(function.playerSwitch()));
+            }
         }
+    }
+
+    public Player getPlayer(boolean b) {
+        if (b) return p1;
+        return p2;
+    }
+
+    public void initGame() {
+        board.createBoard();
+        p1.initStuff();
+        p2.initStuff();
+        board.placePion(p1.getStuff());
+        board.placePion(p2.getStuff());
     }
 }

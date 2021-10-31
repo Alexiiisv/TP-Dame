@@ -46,7 +46,7 @@ public class Pion {
 
     @Override
     public String toString() {
-        return "Jsuis un Pion";
+        return "Jsuis un Pion\nJe me trouve a la position X : " + this.posY + " Y : " + this.posX;
     }
 }
 
