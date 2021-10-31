@@ -4,7 +4,6 @@ import meilleur.com.model.Board;
 import meilleur.com.model.Player;
 
 public class Game {
-
         Function function = new Function();
         Board board = new Board();
         Player p1 = new Player(0);
@@ -19,6 +18,7 @@ public class Game {
             board.placePion(p1.getStuff());
             board.placePion(p2.getStuff());
             board.printMap();
+            function.playerSwitch();
 
         }
     }
