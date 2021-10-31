@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Board {
 
-    private String Moves;
+    private String input;
     private int numb = 0, pos = 0;
     private final int L = 10;
     private final int H = 10;
@@ -49,28 +49,29 @@ public class Board {
     public void move(Player player) {
         boolean falseInput = true;
         Scanner scanner = new Scanner(System.in);
-        Moves = scanner.nextLine();
         while (falseInput){
             System.out.println("Que souhaitez vous faire ?");
-            String input = scanner.nextLine();
+            input = scanner.nextLine();
             if (input.matches("[0-9][0-9] [0-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")){
                 falseInput = false;
                 if (player.movePion(input)) {
-                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(2), player.getLetter());
+                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(2), player);
                 }
             }
             else if (input.equals("p")) player.printStuff();
+            else if (input.equals("q")) System.exit(1);
         }
     }
-    private void movePionToPosition(int lastX, int lastY, String pos, char c) {
+    private void movePionToPosition(int lastX, int lastY, String pos, Player player) {
         map[lastY][lastX] = '_';
         String[] split = pos.split("");
-        lastY = split[2].equals("T") ? lastY-Integer.parseInt(split[1]) : lastY+Integer.parseInt(split[1]);
-        lastX = split[3].equals("L") ? lastX-Integer.parseInt(split[1]) : lastX+Integer.parseInt(split[1]);
-        map[lastY][lastX] = c;
+        int newX = split[3].equals("L") ? lastX-Integer.parseInt(split[1]) : lastX+Integer.parseInt(split[1]);
+        int newY = split[2].equals("T") ? lastY-Integer.parseInt(split[1]) : lastY+Integer.parseInt(split[1]);
+        player.updatePion(lastY, lastX, newX, newY);
+        map[newY][newX] = player.getLetter();
     }
     public String ReturnMove(){
-        return Moves;
+        return input;
     }
 
 }

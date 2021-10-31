@@ -78,4 +78,13 @@ public class Player {
         return false;
     }
 
+    public void updatePion(int lastY, int lastX, int newX, int newY) {
+        for (Pion pion: this.stuff) {
+            if (pion.getPosY() == lastY && pion.getPosX() == lastX) {
+                pion.setPosX(newX);
+                pion.setPosY(newY);
+                break;
+            }
+        }
+    }
 }

@@ -26,7 +26,7 @@ public class Game {
     }
 
     public void initGame() {
-        function.FileCreateReadWrite();
+        //function.FileCreateReadWrite();
         board.createBoard();
         p1.initStuff();
         p2.initStuff();
