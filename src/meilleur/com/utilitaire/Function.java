@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Function {
-
+    public boolean started = false;
     public boolean whoPlays = true;
     Board board = new Board();
 
@@ -42,25 +42,24 @@ public class Function {
         }
     }
 
-    public void FileCreateReadWrite() {
-        String data;
+    public void FileCreateReadWrite(String data) {
         try {
-            if (board.ReturnMove() == null) {
-                data = "Voici les déplacements réalisés lors de la partie";
-            } else {
-                data = board.ReturnMove();
+            if (data == null) {
+                data = "Voici les déplacements réalisés lors de la partie : \n";
             }
-
             File f1 = new File("Moves.txt");
+            if(started == false)
             if (!f1.exists()) {
                 f1.createNewFile();
+                started = true;
             } else {
                 f1.delete();
                 f1.createNewFile();
+                started = true;
             }
             FileWriter fileWritter = new FileWriter(f1.getName(), true);
             BufferedWriter bw = new BufferedWriter(fileWritter);
-            bw.write(data);
+            bw.write("- " + data + "\n");
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
