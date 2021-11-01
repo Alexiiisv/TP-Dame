@@ -1,16 +1,20 @@
 package meilleur.com.utilitaire;
 
 import meilleur.com.model.Board;
+import meilleur.com.model.Player;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Function {
     public boolean started = false;
     public boolean whoPlays = true;
+    private final String fileName = System.currentTimeMillis() + ".txt", pathName = "src/meilleur/com/save/";
     Board board = new Board();
 
     public void mainMenu() {
@@ -42,24 +46,29 @@ public class Function {
         }
     }
 
+    public void FileCreateReadWrite(String data, Player player1, Player player2) {
+        if (data == null) {
+            data = "Cette game oppose " + player1.getName() + " et " + player2.getName() + "\nVoici les déplacements réalisés lors de la partie : \n";
+        }
+        FileCreateReadWrite(data);
+
+    }
+
     public void FileCreateReadWrite(String data) {
         try {
-            if (data == null) {
-                data = "Voici les déplacements réalisés lors de la partie : \n";
-            }
-            File f1 = new File("Moves.txt");
-            if(started == false)
-            if (!f1.exists()) {
-                f1.createNewFile();
-                started = true;
-            } else {
-                f1.delete();
-                f1.createNewFile();
-                started = true;
-            }
-            FileWriter fileWritter = new FileWriter(f1.getName(), true);
+            File f1 = new File(pathName + fileName);
+            if(!started)
+                if (!f1.exists()) {
+                    f1.createNewFile();
+                    started = true;
+                } else {
+                    f1.delete();
+                    f1.createNewFile();
+                    started = true;
+                }
+            FileWriter fileWritter = new FileWriter(pathName + fileName, true);
             BufferedWriter bw = new BufferedWriter(fileWritter);
-            bw.write("- " + data + "\n");
+            bw.write(data + "\n");
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
