@@ -8,27 +8,35 @@ public class Game {
     Board board = new Board();
     Player p1 = new Player(0, "Jackie");
     Player p2 = new Player(1, "Michel");
-    boolean inGame = true;
+    int choix = 0;
+    boolean inGame = true, player = true;
 
     public void newGame() {
         function.mainMenu();
         if (function.choix()) {
             initGame();
             while (inGame) {
-                boolean player = function.playerSwitch();
-                board.move(getPlayer(player), getPlayer(!player));
-                function.FileCreateReadWrite(board.ReturnMove());
+                if (choix != 2) {
+                    player = function.playerSwitch();
+                }
+                choix = board.move(getPlayer(player), getPlayer(!player));
+                if (choix == 0) {
+                    function.appendDataToResult("\t]\n}");
+                    function.writeFile();
+                    System.exit(10);
+                }
+                function.appendDataToResult(board.ReturnMove());
             }
         }
     }
 
-    public Player getPlayer(boolean b) {
+    Player getPlayer(boolean b) {
         if (b) return p1;
         return p2;
     }
 
-    public void initGame() {
-        function.FileCreateReadWrite(null, p1, p2);
+    void initGame() {
+        function.appendDataToResult(null, p1, p2);
         board.createBoard();
         p1.initStuff();
         p2.initStuff();

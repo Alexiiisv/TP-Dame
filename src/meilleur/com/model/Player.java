@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 public class Player {
     private final int id;
-    private ArrayList<Pion> stuff = new ArrayList<>();
+    private final ArrayList<Pion> stuff = new ArrayList<>();
     private final char letter;
-    private String name;
+    private final String name;
 
     public Player(int id, String name) {
         this.id = id;
@@ -21,14 +21,6 @@ public class Player {
 
     public ArrayList<Pion> getStuff() {
         return stuff;
-    }
-
-    public void setStuff(ArrayList<Pion> stuff) {
-        this.stuff = stuff;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public char getLetter() {
@@ -46,21 +38,11 @@ public class Player {
             if (y % 2 == 1 && x < 10) x += 2;
             if (y % 2 == 0 && x < 11) x += 2;
 
-            if (id == 1) this.stuff.add(new Pion(this.letter, x - 2, y));
-            else this.stuff.add(new Pion(this.letter, x - 2, y));
-
+            this.stuff.add(new Pion(this.letter, x - 2, y));
 
             if (i % 5 == 0 && x == 11 || x == 10) y++;
             if (i % 5 == 0 && x > 5) x = 0;
         }
-    }
-
-    public int countAlive() {
-        int count = 0;
-        for (Pion p : this.stuff) {
-            if (p.isAlive()) count++;
-        }
-        return count;
     }
 
     public void printStuff() {

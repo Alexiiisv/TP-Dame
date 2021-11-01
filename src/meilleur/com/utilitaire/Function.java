@@ -1,21 +1,17 @@
 package meilleur.com.utilitaire;
 
-import meilleur.com.model.Board;
 import meilleur.com.model.Player;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Function {
-    public boolean started = false;
     public boolean whoPlays = true;
-    private final String fileName = System.currentTimeMillis() + ".txt", pathName = "src/meilleur/com/save/";
-    Board board = new Board();
+    private String dataToWrite = "";
 
     public void mainMenu() {
         System.out.println("\t\tTP - Dame\n\n");
@@ -34,7 +30,6 @@ public class Function {
     }
 
     public boolean playerSwitch() {
-        String player1 = "Joueur 1", player2 = "Joueur 2";
         if (whoPlays) {
             //Function to check if the game ended to add here
             whoPlays = false;
@@ -46,34 +41,42 @@ public class Function {
         }
     }
 
-    public void FileCreateReadWrite(String data, Player player1, Player player2) {
-        if (data == null) {
-            data = "Cette game oppose " + player1.getName() + " et " + player2.getName() + "\nVoici les déplacements réalisés lors de la partie : \n";
-        }
-        FileCreateReadWrite(data);
-
+    public void appendDataToResult(String data, Player player1, Player player2) {
+        if (data == null)
+            data = "{\n\t\"Players\": [\n\t\t\"" + player1.getName() + "\",\n\t\t\"" + player2.getName() + "\"\n\t],\n\t\"Moves\": [\n";
+        appendDataToResult(data);
     }
 
-    public void FileCreateReadWrite(String data) {
+    public void appendDataToResult(String data) {
+        if (!data.equals("\t\t\"p\",\n") && !data.equals("\t\t\"P\",\n")) dataToWrite += data;
+    }
+
+    public void writeFile() {
+        FileWriter fileWritter;
+        final String fileName = "src/meilleur/com/save/" + millisToDate() + ".json";
+
         try {
-            File f1 = new File(pathName + fileName);
-            if(!started)
-                if (!f1.exists()) {
-                    f1.createNewFile();
-                    started = true;
-                } else {
-                    f1.delete();
-                    f1.createNewFile();
-                    started = true;
-                }
-            FileWriter fileWritter = new FileWriter(pathName + fileName, true);
+            fileWritter = new FileWriter(fileName, true);
             BufferedWriter bw = new BufferedWriter(fileWritter);
-            bw.write(data + "\n");
+            char[] replastCharArr = dataToWrite.toCharArray();
+
+            for (int i = replastCharArr.length - 1; i >= 0; i--) {
+                if (replastCharArr[i] == ',') {
+                    replastCharArr[i] = ' ';
+                    break;
+                }
+            }
+            bw.write(replastCharArr);
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private String millisToDate() {
+        SimpleDateFormat SDFormat = new SimpleDateFormat("dd-MM-yyyy 'a' kk-mm-ss");
+        Date date = new Date();
+        return SDFormat.format(date);
     }
 }
 

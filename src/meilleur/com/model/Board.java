@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Board {
 
+    private final int L = 10, H = 10;
+    private final char[][] map = new char[L][H];
     private String input;
     private int numb = 0, pos = 0;
-    private final int L = 10, H = 10;
-    private char[][] map = new char[L][H];
 
     public void createBoard() {
         for (char[] col : map) {
@@ -44,22 +44,25 @@ public class Board {
         System.out.println();
     }
 
-    public void move(Player player1, Player player2) {
-        boolean falseInput = true;
+    public int move(Player player1, Player player2) {
         Scanner scanner = new Scanner(System.in);
         printMap();
-        while (falseInput) {
+        while (true) {
             System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
             input = scanner.nextLine();
 
             if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
-                falseInput = false;
 
                 if (player1.movePion(input)) {
                     movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
                 }
-            } else if (input.equals("p") || input.equals("P")) player1.printStuff();
-            else if (input.equals("q") || input.equals("Q")) System.exit(1);
+                return 1;
+            } else if (input.equals("p") || input.equals("P")) {
+                player1.printStuff();
+                return 2;
+            } else if (input.equals("q") || input.equals("Q")) {
+                return 0;
+            }
         }
     }
 
@@ -73,10 +76,12 @@ public class Board {
             System.out.println(map[newY][newX]);
 
             if (map[newY][newX] == '_') {
+
                 map[lastY][lastX] = '_';
                 player1.updatePion(lastY, lastX, newX, newY);
                 map[newY][newX] = player1.getLetter();
             } else if (map[newY][newX] != player1.getLetter()) {
+
                 map[newY][newX] = '_';
                 player2.updatePionLive(newY, newX);
                 newX += split[2].equals("L") ? -1 : 1;
@@ -95,13 +100,14 @@ public class Board {
         }
     }
 
-    private int isDame(Pion pion, int i) {
-        if (pion.isDame()) return i;
-        return 1;
-    }
-
+    /*
+        private int isDame(Pion pion, int i) {
+            if (pion.isDame()) return i;
+            return 1;
+        }
+     */
     public String ReturnMove() {
-        return input;
+        return "\t\t\"" + input + "\",\n";
     }
 
 }
