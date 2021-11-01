@@ -51,7 +51,7 @@ public class Board {
         while (falseInput) {
             System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
             input = scanner.nextLine();
-
+            System.out.println(input);
             if (input.matches("[0-9][0-9] [0-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
                 falseInput = false;
 

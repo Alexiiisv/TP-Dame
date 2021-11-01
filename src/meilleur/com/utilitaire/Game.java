@@ -17,6 +17,7 @@ public class Game {
             while (inGame) {
                 boolean player = function.playerSwitch();
                 board.move(getPlayer(player), getPlayer(!player));
+                function.FileCreateReadWrite(board.ReturnMove());
             }
         }
     }
@@ -27,7 +28,7 @@ public class Game {
     }
 
     public void initGame() {
-        //function.FileCreateReadWrite();
+        function.FileCreateReadWrite(null);
         board.createBoard();
         p1.initStuff();
         p2.initStuff();
