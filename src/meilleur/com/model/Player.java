@@ -104,4 +104,11 @@ public class Player {
             }
         }
     }
+
+    public Pion getPion(int y, int x) {
+        for (Pion pion : this.stuff) {
+            if (pion.getPosX() == x && pion.getPosY() == y) return pion;
+        }
+        return null;
+    }
 }

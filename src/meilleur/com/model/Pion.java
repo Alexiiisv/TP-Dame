@@ -4,7 +4,7 @@ public class Pion {
 
     private char Letter; //j1 = 'p' || j2 = 'P'
     private int posX, posY;
-    private boolean alive = true;
+    private boolean alive = true, isDame = false;
 
     public Pion(char p, int x, int y) {
         this.Letter = p;
@@ -42,6 +42,14 @@ public class Pion {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    public boolean isDame() {
+        return isDame;
+    }
+
+    public void setDame(boolean dame) {
+        isDame = dame;
     }
 
     @Override

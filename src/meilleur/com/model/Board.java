@@ -52,7 +52,7 @@ public class Board {
             System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
             input = scanner.nextLine();
 
-            if (input.matches("[0-9][0-9] [0-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
+            if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
                 falseInput = false;
 
                 if (player1.movePion(input)) {
@@ -65,9 +65,10 @@ public class Board {
 
     private void movePionToPosition(int lastX, int lastY, String pos, Player player1, Player player2) {
         String[] split = pos.split("");
+        //split[0] = String.valueOf(isDame(player1.getPion(lastY, lastX), Integer.parseInt(split[0])));
         int newX = split[2].equals("L") ? lastX - Integer.parseInt(split[0]) : lastX + Integer.parseInt(split[0]);
         int newY = split[1].equals("T") ? lastY - Integer.parseInt(split[0]) : lastY + Integer.parseInt(split[0]);
-
+        System.out.println(Arrays.toString(split));
         if (newX < 9 && newX > 0 && newY < 9 && newY > 0) {
             System.out.println(map[newY][newX]);
 
@@ -92,6 +93,11 @@ public class Board {
             System.out.println("Ce pion n'as pas pus etre déplacer. Vous devez rechoisir une action");
             move(player1, player2);
         }
+    }
+
+    private int isDame(Pion pion, int i) {
+        if (pion.isDame()) return i;
+        return 1;
     }
 
     public String ReturnMove() {
