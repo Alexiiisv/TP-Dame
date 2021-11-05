@@ -11,6 +11,7 @@ public class Game {
     int choix = 0;
     boolean inGame = true, player = true;
 
+    /** Corps du jeu, endroit ou le jeu fonctionne */
     public void newGame() {
         function.mainMenu();
         if (function.choix()) {
@@ -30,17 +31,23 @@ public class Game {
         }
     }
 
+    /**
+     * retourne un Player suivant un boolean
+     * @param b = boolean equivalent au joueur
+     * @return Player
+     */
     Player getPlayer(boolean b) {
         if (b) return p1;
         return p2;
     }
 
+    /** initialise le jeu */
     void initGame() {
         function.appendDataToResult(null, p1, p2);
         board.createBoard();
-        p1.initStuff();
-        p2.initStuff();
-        board.placePion(p1.getStuff());
-        board.placePion(p2.getStuff());
+        p1.initPion();
+        p2.initPion();
+        board.placePion(p1.getAllPion());
+        board.placePion(p2.getAllPion());
     }
 }

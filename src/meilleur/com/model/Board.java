@@ -11,6 +11,7 @@ public class Board {
     private String input;
     private int numb = 0, pos = 0;
 
+    /** Créer la zone de jeu */
     public void createBoard() {
         for (char[] col : map) {
 
@@ -27,12 +28,14 @@ public class Board {
         }
     }
 
+    /** place les pions de chaque joueur */
     public void placePion(ArrayList<Pion> objects) {
         for (Pion o : objects) {
             map[o.getPosY()][o.getPosX()] = o.getLetter();
         }
     }
 
+    /** Affiche la zone de jeu */
     public void printMap() {
         int i = 0;
         System.out.println("\t 0\t1  2  3  4  5  6  7  8  9\n");
@@ -44,6 +47,15 @@ public class Board {
         System.out.println();
     }
 
+    /**
+     * Demande l'action que le joueur veut faire et essaie de la realiser
+     * @param player1 = joueur qui joue
+     * @param player2 = joueur adverse
+     * @return Integer qui équivaut a une action;<p>
+     *          1 = déplacement réalisé et fonctionnel<p>
+     *          2 = demande d'information a propos des pions d'un joueur<p>
+     *          0 = fin de partie<p>
+     */
     public int move(Player player1, Player player2) {
         Scanner scanner = new Scanner(System.in);
         printMap();
@@ -58,7 +70,7 @@ public class Board {
                 }
                 return 1;
             } else if (input.equals("p") || input.equals("P")) {
-                player1.printStuff();
+                player1.printPion();
                 return 2;
             } else if (input.equals("q") || input.equals("Q")) {
                 return 0;
@@ -66,6 +78,14 @@ public class Board {
         }
     }
 
+    /**
+     * Déplace le pion a la case demandée, si c'est possible le code se réalise et on passe au joueur suivant sinon on redemande au joueur de jouer
+     * @param lastX = position du pion avant déplacement sur l'axe X
+     * @param lastY = position du pion avant déplacement sur l'axe Y
+     * @param pos = information donnée par le joueur pour le déplacement
+     * @param player1 = joueur qui joue
+     * @param player2 = joueur adverse
+     */
     private void movePionToPosition(int lastX, int lastY, String pos, Player player1, Player player2) {
         String[] split = pos.split("");
         //split[0] = String.valueOf(isDame(player1.getPion(lastY, lastX), Integer.parseInt(split[0])));
@@ -105,6 +125,11 @@ public class Board {
             if (pion.isDame()) return i;
             return 1;
         }
+     */
+
+    /**
+     * retourne le déplacement réalisé par le joueur pour l'afficher sur le json
+     * @return le déplacement réalisé par le joueur
      */
     public String ReturnMove() {
         return "\t\t\"" + input + "\",\n";
