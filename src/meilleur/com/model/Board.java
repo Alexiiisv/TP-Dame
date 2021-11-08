@@ -92,7 +92,7 @@ public class Board {
         int newX = split[2].equals("L") ? lastX - Integer.parseInt(split[0]) : lastX + Integer.parseInt(split[0]);
         int newY = split[1].equals("T") ? lastY - Integer.parseInt(split[0]) : lastY + Integer.parseInt(split[0]);
         System.out.println(Arrays.toString(split));
-        if (newX < 9 && newX > 0 && newY < 9 && newY > 0) {
+        if (newX <= 9 && newX >= 0 && newY <= 9 && newY >= 0) {
             System.out.println(map[newY][newX]);
 
             if (map[newY][newX] == '_') {
