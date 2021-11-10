@@ -45,6 +45,7 @@ public class ReplayGame {
                 i--;
             }
         }
+        System.exit(0);
     }
 
     private static void waitTime() {

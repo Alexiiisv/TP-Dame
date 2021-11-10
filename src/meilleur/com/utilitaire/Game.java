@@ -17,7 +17,7 @@ public class Game {
         function.mainMenu();
         String choixGame = function.choix();
         if (choixGame.equals("jouer") || choixGame.equals("j")) {
-            initGame();
+            initGame(choixGame);
             while (inGame) {
                 if (choix == 1) {
                     player = function.playerSwitch();
@@ -31,8 +31,8 @@ public class Game {
                 }
                 function.appendDataToResult(board.ReturnMove());
             }
-        } else if (choixGame.equals("replay")) {
-            initGame();
+        } else if (choixGame.equals("replay") || choixGame.equals("r")) {
+            initGame(choixGame);
             board.printMap();
             ReplayGame.watchReplay(board, p1, p2);
         } else System.out.println("Au revoir");
@@ -49,8 +49,8 @@ public class Game {
     }
 
     /** initialise le jeu */
-    void initGame() {
-        boolean botornot = function.isBotPlaying();
+    void initGame(String str) {
+        if (!(str.equals("replay") || str.equals("r"))) botornot = function.isBotPlaying();
         function.appendDataToResult(null, p1, p2);
         board.createBoard();
         p1.initPion();
