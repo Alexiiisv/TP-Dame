@@ -28,10 +28,12 @@ public class Game {
                     function.writeFile();
                     System.exit(10);
                 }
-                if (!board.ReturnMove().equals("\"\t\t\"\"\"\",\n")) function.appendDataToResult(board.ReturnMove());
+                function.appendDataToResult(board.ReturnMove());
             }
         } else if (choixGame.equals("replay")) {
-            ReplayGame.watchReplay();
+            initGame();
+            board.printMap();
+            ReplayGame.watchReplay(board, p1, p2);
         } else System.out.println("Au revoir");
     }
 

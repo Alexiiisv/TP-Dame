@@ -77,6 +77,12 @@ public class Board {
         } else return 3;
     }
 
+    public void move(Player player1, Player player2, String str) {
+        System.out.println("\n\n\n");
+        movePionToPosition(Character.getNumericValue(str.charAt(1)), Character.getNumericValue(str.charAt(0)), str.substring(3), player1, player2);
+        printMap();
+    }
+
     /**
      * Déplace le pion a la case demandée, si c'est possible le code se réalise et on passe au joueur suivant sinon on redemande au joueur de jouer
      * @param lastX = position du pion avant déplacement sur l'axe X
@@ -87,12 +93,11 @@ public class Board {
      */
     private void movePionToPosition(int lastX, int lastY, String pos, Player player1, Player player2) {
         String[] split = pos.split("");
-        //split[0] = String.valueOf(isDame(player1.getPion(lastY, lastX), Integer.parseInt(split[0])));
         int newX = split[2].equals("L") ? lastX - Integer.parseInt(split[0]) : lastX + Integer.parseInt(split[0]);
         int newY = split[1].equals("T") ? lastY - Integer.parseInt(split[0]) : lastY + Integer.parseInt(split[0]);
-        System.out.println(Arrays.toString(split));
+        //System.out.println(Arrays.toString(split));
         if (newX <= 9 && newX >= 0 && newY <= 9 && newY >= 0) {
-            System.out.println(map[newY][newX]);
+            //System.out.println(map[newY][newX]);
 
             if (map[newY][newX] == '_') {
 
@@ -106,7 +111,7 @@ public class Board {
                 player2.updatePionLive(newY, newX);
                 newX += split[2].equals("L") ? -1 : 1;
                 newY += split[1].equals("T") ? -1 : 1;
-                System.out.println(newY + " oui " + newX);
+                //System.out.println(newY + " oui " + newX);
                 map[lastY][lastX] = '_';
                 player1.updatePion(lastY, lastX, newX, newY);
                 player1.updatePionToDame(newX, newY);
