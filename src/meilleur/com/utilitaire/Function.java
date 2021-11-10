@@ -15,7 +15,7 @@ public class Function {
 
 
     /**
-    *   Affichage du menu principale avec instruction du jeu
+     * Affichage du menu principale avec instruction du jeu
      */
     public void mainMenu() {
         System.out.println("\t\tTP - Dame\n\n");
@@ -36,6 +36,23 @@ public class Function {
         return scanner.nextLine();
     }
 
+
+    public boolean isBotPlaying() {
+        boolean botornot = true;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Combien y'aura t'il de joueurs ?\nPar défaut vous serez seul si vous ne remplissez rien");
+        int answer = scanner.nextInt();
+        if (answer == 1) {
+            botornot = true;
+
+        } else if (answer == 2) {
+            botornot = false;
+        } else {
+            System.out.println("Vous jouerez donc seul");
+
+        }
+        return botornot;
+    }
     /**
      * retourne un boolean qui correspond a un joueur
      * @return boolean false = player 1
