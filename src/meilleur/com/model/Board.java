@@ -29,8 +29,8 @@ public class Board {
     }
 
     /** place les pions de chaque joueur */
-    public void placePion(ArrayList<Pion> objects) {
-        for (Pion o : objects) {
+    public void placePion(ArrayList<Objet> objects) {
+        for (Objet o : objects) {
             map[o.getPosY()][o.getPosX()] = o.getLetter();
         }
     }
@@ -59,23 +59,22 @@ public class Board {
     public int move(Player player1, Player player2) {
         Scanner scanner = new Scanner(System.in);
         printMap();
-        while (true) {
-            System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
-            input = scanner.nextLine();
+        System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
+        input = scanner.nextLine();
 
-            if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
+        if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
 
-                if (player1.movePion(input)) {
-                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
-                }
+            if (player1.movePion(input)) {
+                movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
                 return 1;
-            } else if (input.equals("p") || input.equals("P")) {
-                player1.printPion();
-                return 2;
-            } else if (input.equals("q") || input.equals("Q")) {
-                return 0;
             }
-        }
+            else return 3;
+        } else if (input.equals("p") || input.equals("P")) {
+            player1.printPion();
+            return 3;
+        } else if (input.equals("q") || input.equals("Q")) {
+            return 0;
+        } else return 3;
     }
 
     /**
@@ -99,8 +98,9 @@ public class Board {
 
                 map[lastY][lastX] = '_';
                 player1.updatePion(lastY, lastX, newX, newY);
-                map[newY][newX] = player1.getLetter();
-            } else if (map[newY][newX] != player1.getLetter()) {
+                player1.updatePionToDame(newX, newY);
+                map[newY][newX] = player1.getPionLetter(newY, newX);
+            } else if (map[newY][newX] != player1.getLetter() && map[newY + (newY - lastY)][newX + (newX - lastX)] == '_') {
 
                 map[newY][newX] = '_';
                 player2.updatePionLive(newY, newX);
@@ -109,7 +109,8 @@ public class Board {
                 System.out.println(newY + " oui " + newX);
                 map[lastY][lastX] = '_';
                 player1.updatePion(lastY, lastX, newX, newY);
-                map[newY][newX] = player1.getLetter();
+                player1.updatePionToDame(newX, newY);
+                map[newY][newX] = player1.getPionLetter(newY, newX);
             } else {
                 System.out.println("Ce pion n'as pas pus etre déplacer. Vous devez rechoisir une action");
                 move(player1, player2);

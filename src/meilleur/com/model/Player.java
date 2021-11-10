@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Player {
     private final int id;
-    private final ArrayList<Pion> allPion = new ArrayList<>();
+    private final ArrayList<Objet> allPion = new ArrayList<>();
     private final char letter;
     private final String name;
 
@@ -21,7 +21,7 @@ public class Player {
     }
 
     /** retourne la liste de tous les pions */
-    public ArrayList<Pion> getAllPion() {
+    public ArrayList<Objet> getAllPion() {
         return allPion;
     }
 
@@ -53,7 +53,7 @@ public class Player {
     public void printPion() {
         System.out.println("voici les pions du joueurs " + this.id + "\n");
         int i = 0;
-        for (Pion p : this.allPion) {
+        for (Objet p : this.allPion) {
             if (p.isAlive()) {
                 i++;
                 System.out.println(i + " " + p.toString());
@@ -69,8 +69,8 @@ public class Player {
      */
     public boolean movePion(String move) {
         String[] resultMove = move.split("");
-        for (Pion pion : this.allPion) {
-            if (pion.getPosY() == Integer.parseInt(resultMove[0]) && pion.getPosX() == Integer.parseInt(resultMove[1])) {
+        for (Objet objet : this.allPion) {
+            if (objet.getPosY() == Integer.parseInt(resultMove[0]) && objet.getPosX() == Integer.parseInt(resultMove[1])) {
                 return true;
             }
         }
@@ -85,7 +85,7 @@ public class Player {
      * @param newY {@code int} = position apres déplacement sur l'axe Y
      */
     public void updatePion(int lastY, int lastX, int newX, int newY) {
-        for (Pion pion : this.allPion) {
+        for (Objet pion : this.allPion) {
             if (pion.getPosY() == lastY && pion.getPosX() == lastX) {
                 pion.setPosX(newX);
                 pion.setPosY(newY);
@@ -100,12 +100,21 @@ public class Player {
      * @param x {@code int}
      */
     public void updatePionLive(int y, int x) {
-        for (Pion pion : this.allPion) {
+        for (Objet pion : this.allPion) {
             if (pion.getPosY() == y && pion.getPosX() == x) {
                 pion.setAlive(false);
                 break;
             }
         }
+    }
+
+    public char getPionLetter(int y, int x) {
+        for (Objet pion : this.allPion) {
+            if (pion.getPosY() == y && pion.getPosX() == x) {
+                return pion.getLetter();
+            }
+        }
+        return ' ';
     }
 
     /**
@@ -114,10 +123,28 @@ public class Player {
      * @param x {@code int}
      * @return retourne un Pion si il existe sinon null
      */
-    public Pion getPion(int y, int x) {
-        for (Pion pion : this.allPion) {
+    public Objet getPion(int y, int x) {
+        for (Objet pion : this.allPion) {
             if (pion.getPosX() == x && pion.getPosY() == y) return pion;
         }
         return null;
+    }
+
+    public void updatePionToDame(int x, int y) {
+        Objet pion;
+        if (this.id == 1 && y == 0 && x <= 9 && x >= 0)
+        {
+            pion = getPion(y, x);
+            this.allPion.add(new Dame('D', pion.getPosX(), pion.getPosY()));
+            this.allPion.remove(pion);
+
+        }
+        else if (this.id == 0 && y == 9 && x <= 9 && x >= 0)
+        {
+            pion = getPion(y, x);
+            this.allPion.add(new Dame('d', pion.getPosX(), pion.getPosY()));
+            this.allPion.remove(pion);
+        }
+
     }
 }

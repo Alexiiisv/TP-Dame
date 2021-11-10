@@ -1,55 +1,9 @@
 package meilleur.com.model;
 
-public class Pion {
+public class Pion extends Objet{
 
-    private char Letter; //j1 = 'p' || j2 = 'P'
-    private int posX, posY;
-    private boolean alive = true, isDame = false;
-
-    public Pion(char p, int x, int y) {
-        this.Letter = p;
-        this.posX = x;
-        this.posY = y;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public Character getLetter() {
-        return Letter;
-    }
-
-    public void setLetter(char letter) {
-        Letter = letter;
-    }
-
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
-    public boolean isDame() {
-        return isDame;
-    }
-
-    public void setDame(boolean dame) {
-        isDame = dame;
+    public Pion(char letter, int posX, int posY) {
+        super(letter, posX, posY);
     }
 
     @Override

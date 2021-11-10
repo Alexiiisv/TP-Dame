@@ -8,27 +8,31 @@ public class Game {
     Board board = new Board();
     Player p1 = new Player(0, "Jackie");
     Player p2 = new Player(1, "Michel");
-    int choix = 0;
+    int choix = 1;
     boolean inGame = true, player = true;
 
     /** Corps du jeu, endroit ou le jeu fonctionne */
     public void newGame() {
         function.mainMenu();
-        if (function.choix()) {
+        String choixGame = function.choix();
+        if (choixGame.equals("jouer") || choixGame.equals("j")) {
             initGame();
             while (inGame) {
-                if (choix != 2) {
+                if (choix == 1) {
                     player = function.playerSwitch();
+                    choix = 3;
                 }
-                choix = board.move(getPlayer(player), getPlayer(!player));
+                if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
                 if (choix == 0) {
                     function.appendDataToResult("\t]\n}");
                     function.writeFile();
                     System.exit(10);
                 }
-                function.appendDataToResult(board.ReturnMove());
+                if (!board.ReturnMove().equals("\"\t\t\"\"\"\",\n")) function.appendDataToResult(board.ReturnMove());
             }
-        }
+        } else if (choixGame.equals("replay")) {
+            ReplayGame.watchReplay();
+        } else System.out.println("Au revoir");
     }
 
     /**
@@ -49,5 +53,6 @@ public class Game {
         p2.initPion();
         board.placePion(p1.getAllPion());
         board.placePion(p2.getAllPion());
+        System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
     }
 }

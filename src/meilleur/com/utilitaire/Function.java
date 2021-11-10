@@ -30,11 +30,10 @@ public class Function {
      * Affichage pour demander si l'utilisateur veut jouer au jeu
      * Il a le choix entre oui et non.
      */
-    public boolean choix() {
+    public String choix() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n\nBonjour, voulez-vous jouer au Dame ? (yes|oui/no)\n");
-        String reponse = scanner.nextLine();
-        return reponse.equals("yes") || reponse.equals("y") || reponse.equals("oui") || reponse.equals("o") || (reponse.equals("no") ? false : false);
+        System.out.println("\n\nBonjour, voulez-vous jouer au Dame ou regarder un replay ou rien faire ? (jouer/replay/quitter)\n");
+        return scanner.nextLine();
     }
 
     /**
