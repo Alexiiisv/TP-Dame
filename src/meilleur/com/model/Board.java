@@ -57,25 +57,26 @@ public class Board {
      *          0 = fin de partie<p>
      */
     public int move(Player player1, Player player2) {
-        Scanner scanner = new Scanner(System.in);
-        printMap();
-        System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
-        input = scanner.nextLine();
+            Scanner scanner = new Scanner(System.in);
+            printMap();
+            System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
+            input = scanner.nextLine();
 
-        if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
+            if (input.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
 
-            if (player1.movePion(input)) {
-                movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
-                return 1;
-            }
-            else return 3;
-        } else if (input.equals("p") || input.equals("P")) {
-            player1.printPion();
-            return 3;
-        } else if (input.equals("q") || input.equals("Q")) {
-            return 0;
-        } else return 3;
-    }
+                if (player1.movePion(input)) {
+                    movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
+                    return 1;
+                } else return 3;
+            } else if (input.equals("p") || input.equals("P")) {
+                player1.printPion();
+                return 3;
+            } else if (input.equals("q") || input.equals("Q")) {
+                return 0;
+            } else return 3;
+        }
+
+
 
     /**
      * Déplace le pion a la case demandée, si c'est possible le code se réalise et on passe au joueur suivant sinon on redemande au joueur de jouer
@@ -137,5 +138,6 @@ public class Board {
     }
 
 }
+
 
 

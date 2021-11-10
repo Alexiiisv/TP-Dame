@@ -4,6 +4,7 @@ import meilleur.com.model.Board;
 import meilleur.com.model.Player;
 
 public class Game {
+    public boolean botornot = false;
     Function function = new Function();
     Board board = new Board();
     Player p1 = new Player(0, "Jackie");
@@ -47,6 +48,7 @@ public class Game {
 
     /** initialise le jeu */
     void initGame() {
+        boolean botornot = function.isBotPlaying();
         function.appendDataToResult(null, p1, p2);
         board.createBoard();
         p1.initPion();
