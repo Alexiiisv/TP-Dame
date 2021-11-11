@@ -1,11 +1,10 @@
 package meilleur.com.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Player {
     private final int id;
-    private final ArrayList<Objet> allPion = new ArrayList<>();
+    private final ArrayList<Pions> allPion = new ArrayList<>();
     private final char letter;
     private final String name;
 
@@ -21,7 +20,7 @@ public class Player {
     }
 
     /** retourne la liste de tous les pions */
-    public ArrayList<Objet> getAllPion() {
+    public ArrayList<Pions> getAllPion() {
         return allPion;
     }
 
@@ -53,7 +52,7 @@ public class Player {
     public void printPion() {
         System.out.println("voici les pions du joueurs " + this.id + "\n");
         int i = 0;
-        for (Objet p : this.allPion) {
+        for (Pions p : this.allPion) {
             if (p.isAlive()) {
                 i++;
                 System.out.println(i + " " + p.toString());
@@ -69,8 +68,10 @@ public class Player {
      */
     public boolean movePion(String move) {
         String[] resultMove = move.split("");
-        for (Objet objet : this.allPion) {
-            if (objet.getPosY() == Integer.parseInt(resultMove[0]) && objet.getPosX() == Integer.parseInt(resultMove[1])) {
+        int y = Integer.parseInt(resultMove[0]);
+        int x = Integer.parseInt(resultMove[1]);
+        for (Pions pions : this.allPion) {
+            if (pions.getPosY() == y && pions.getPosX() == x) {
                 return true;
             }
         }
@@ -85,7 +86,7 @@ public class Player {
      * @param newY {@code int} = position apres déplacement sur l'axe Y
      */
     public void updatePion(int lastY, int lastX, int newX, int newY) {
-        for (Objet pion : this.allPion) {
+        for (Pions pion : this.allPion) {
             if (pion.getPosY() == lastY && pion.getPosX() == lastX) {
                 pion.setPosX(newX);
                 pion.setPosY(newY);
@@ -100,7 +101,7 @@ public class Player {
      * @param x {@code int}
      */
     public void updatePionLive(int y, int x) {
-        for (Objet pion : this.allPion) {
+        for (Pions pion : this.allPion) {
             if (pion.getPosY() == y && pion.getPosX() == x) {
                 pion.setAlive(false);
                 break;
@@ -109,7 +110,7 @@ public class Player {
     }
 
     public char getPionLetter(int y, int x) {
-        for (Objet pion : this.allPion) {
+        for (Pions pion : this.allPion) {
             if (pion.getPosY() == y && pion.getPosX() == x) {
                 return pion.getLetter();
             }
@@ -123,15 +124,15 @@ public class Player {
      * @param x {@code int}
      * @return retourne un Pion si il existe sinon null
      */
-    public Objet getPion(int y, int x) {
-        for (Objet pion : this.allPion) {
+    public Pions getPion(int y, int x) {
+        for (Pions pion : this.allPion) {
             if (pion.getPosX() == x && pion.getPosY() == y) return pion;
         }
         return null;
     }
 
     public void updatePionToDame(int x, int y) {
-        Objet pion;
+        Pions pion;
         if (this.id == 1 && y == 0 && x <= 9 && x >= 0)
         {
             pion = getPion(y, x);

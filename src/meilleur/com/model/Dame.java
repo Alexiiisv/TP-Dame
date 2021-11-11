@@ -1,6 +1,6 @@
 package meilleur.com.model;
 
-public class Dame extends Objet {
+public class Dame extends Pions {
 
     public Dame(char letter, int posX, int posY) {
         super(letter, posX, posY);
@@ -8,7 +8,7 @@ public class Dame extends Objet {
 
     @Override
     public String toString() {
-        return "Jsuis une Dame";
+        return "Jsuis une Dame\nJe me trouve a la position X : " + this.posY + " Y : " + this.posX;
     }
 }
 

@@ -3,6 +3,7 @@ package meilleur.com.utilitaire;
 import meilleur.com.model.Player;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -100,10 +101,12 @@ public class Function {
             fileWritter = new FileWriter(fileName, true);
             BufferedWriter bw = new BufferedWriter(fileWritter);
             char[] replastCharArr = dataToWrite.toCharArray();
-            for (int i = replastCharArr.length - 1; i >= 0; i--) {
-                if (replastCharArr[i] == ',') {
-                    replastCharArr[i] = ' ';
-                    break;
+            if (countCharInString(replastCharArr, ',') > 2) {
+                for (int i = replastCharArr.length - 1; i >= 0; i--) {
+                    if (replastCharArr[i] == ',') {
+                        replastCharArr[i] = ' ';
+                        break;
+                    }
                 }
             }
             bw.write(replastCharArr);
@@ -114,13 +117,63 @@ public class Function {
     }
 
     /**
+     * compte le nombre de caractère qu'il y a dans une liste de char
+     * @param chars texte ou faut compter le caractère
+     * @param c caractère à compter
+     * @return le nombre de caractère trouvé
+     */
+    private int countCharInString(char[] chars, char c) {
+        int i = 0;
+        for (char ch: chars) {
+            if (ch == c) i++;
+        }
+        return i;
+    }
+
+    /**
      * retourne un nom de fichier sous un format de type "dd-MM-yyyy 'a' kk-mm-ss"
      * @return nom du fichier
      */
     private String millisToDate() {
         SimpleDateFormat SDFormat = new SimpleDateFormat("dd-MM-yyyy 'a' kk-mm-ss");
-        Date date = new Date();
-        return SDFormat.format(date);
+        return SDFormat.format(new Date());
+    }
+
+    private String[] listAllSave() {
+        File folder = new File("src/meilleur/com/save");
+        File[] listOfFiles = folder.listFiles();
+        assert listOfFiles != null;
+        String[] listOfFilesName = new String[listOfFiles.length];
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                listOfFilesName[i] = listOfFiles[i].getName();
+            }
+        }
+        return listOfFilesName;
+    }
+
+    public String printAllSave() {
+        String[] allName = listAllSave();
+        int i = 0, filechoosen;
+        Scanner scanner = new Scanner(System.in);
+        for (String s: allName) {
+            System.out.println(i + " " + s);
+            i++;
+        }
+        System.out.println("\nQuel save veut-tu lire ?");
+        try {
+            filechoosen = scanner.nextInt();
+            if (filechoosen > allName.length-1) {
+                System.out.println("Tu as choisis un fichier qui n'existe pas\nIl va falloir relancer le code pour pouvoir visionner un replay");
+                System.exit(10);
+            }
+            return allName[filechoosen];
+        }
+        catch (Exception e) {
+            System.out.println("Tu as du réaliser une faute d'input\nIl va falloir relancer le code pour pouvoir visionner un replay");
+            System.exit(10);
+        }
+        return "";
     }
 }
 

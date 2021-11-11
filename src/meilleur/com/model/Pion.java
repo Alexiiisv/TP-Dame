@@ -1,6 +1,6 @@
 package meilleur.com.model;
 
-public class Pion extends Objet{
+public class Pion extends Pions {
 
     public Pion(char letter, int posX, int posY) {
         super(letter, posX, posY);

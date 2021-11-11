@@ -1,12 +1,12 @@
 package meilleur.com.model;
 
-public class Objet {
+public class Pions {
 
-    char Letter; //j1 = 'p' || j2 = 'P'
+    char Letter;
     int posX, posY;
     boolean alive;
 
-    public Objet(char letter, int posX, int posY) {
+    public Pions(char letter, int posX, int posY) {
         Letter = letter;
         this.posX = posX;
         this.posY = posY;
@@ -44,4 +44,5 @@ public class Objet {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
 }

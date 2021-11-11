@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReplayGame {
-    private static ArrayList<String> eachMove = new ArrayList<>();
+    private static final ArrayList<String> eachMove = new ArrayList<>();
+    private static final Function function = new Function();
     public static void watchReplay(Board board, Player p1, Player p2) {
-        readJson("10-11-2021 a 11-08-43.json");
+        String test = function.printAllSave();
+        readJson(test);
         playReplay(board, p2, p1);
     }
     private static void readJson(String string) {
+        String reg = "[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])";
         try {
             FileReader file = new FileReader("src/meilleur/com/save/" + string);
             Scanner scanner = new Scanner(file);
@@ -22,7 +25,7 @@ public class ReplayGame {
                 String data = scanner.nextLine();
                 if (data.length() > 7) {
                     data = data.substring(3, 9);
-                    if (data.matches("[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])")) {
+                    if (data.matches(reg)) {
                         eachMove.add(data);
                     }
                 }
@@ -34,6 +37,7 @@ public class ReplayGame {
 
     private static void playReplay(Board board, Player p1, Player p2) {
         int i = 0;
+        board.printplayBoard();
         for (String str: eachMove) {
             waitTime();
             if (i ==0) {

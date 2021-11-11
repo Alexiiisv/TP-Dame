@@ -18,22 +18,9 @@ public class Game {
         String choixGame = function.choix();
         if (choixGame.equals("jouer") || choixGame.equals("j")) {
             initGame(choixGame);
-            while (inGame) {
-                if (choix == 1) {
-                    player = function.playerSwitch();
-                    choix = 3;
-                }
-                if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
-                if (choix == 0) {
-                    function.appendDataToResult("\t]\n}");
-                    function.writeFile();
-                    System.exit(10);
-                }
-                function.appendDataToResult(board.ReturnMove());
-            }
+            inGameF();
         } else if (choixGame.equals("replay") || choixGame.equals("r")) {
             initGame(choixGame);
-            board.printMap();
             ReplayGame.watchReplay(board, p1, p2);
         } else System.out.println("Au revoir");
     }
@@ -57,6 +44,21 @@ public class Game {
         p2.initPion();
         board.placePion(p1.getAllPion());
         board.placePion(p2.getAllPion());
-        System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
+        if (!(str.equals("replay") || str.equals("r"))) System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
+    }
+    protected void inGameF() {
+        while (inGame) {
+            if (choix == 1) {
+                player = function.playerSwitch();
+                choix = 3;
+            }
+            if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
+            if (choix == 0) {
+                function.appendDataToResult("\t]\n}");
+                function.writeFile();
+                System.exit(10);
+            }
+            function.appendDataToResult(board.ReturnMove());
+        }
     }
 }
