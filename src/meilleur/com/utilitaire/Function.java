@@ -1,5 +1,6 @@
 package meilleur.com.utilitaire;
 
+import meilleur.com.model.Pions;
 import meilleur.com.model.Player;
 
 import java.io.BufferedWriter;
@@ -117,6 +118,54 @@ public class Function {
     }
 
     /**
+     * vérifie dans le dossier des sauvegardes si il en existe.
+     * Si des saves existes il les affiches et demande a l'utilisateur quel replay il veut regarder
+     * @return Nom du fichier
+     */
+    public String printAllSave() {
+        String[] allName = listAllSave();
+        int i = 0, filechoosen;
+        Scanner scanner = new Scanner(System.in);
+        for (String s : allName) {
+            System.out.println(i + " " + s);
+            i++;
+        }
+        System.out.println("\nQuel save veut-tu lire ?");
+        try {
+            filechoosen = scanner.nextInt();
+            if (filechoosen > allName.length - 1) {
+                System.out.println("Tu as choisis un fichier qui n'existe pas\nIl va falloir relancer le code pour pouvoir visionner un replay");
+                System.exit(10);
+            }
+            return allName[filechoosen];
+        } catch (Exception e) {
+            System.out.println("Tu as du réaliser une faute d'input\nIl va falloir relancer le code pour pouvoir visionner un replay");
+            System.exit(10);
+        }
+        return "";
+    }
+
+    /**
+     * modifie le nombre de deplacement d'un pion si l'input est mauvais
+     * @param str mouvement demandé
+     * @param p1 joueur qui joue
+     * @param lastX position du pion sur l'axe X
+     * @param lastY position du pion sur l'axe Y
+     * @return le déplacement modifier
+     */
+    public String moveUpdate(String str, Player p1, int lastX, int lastY) {
+        String[] strings = str.split("");
+        Pions pions = p1.getPion(lastY, lastX);
+        System.out.println(pions.getClass().getSimpleName());
+        if (!strings[0].equals("1") && pions.getClass().getSimpleName().equals("Pion")) {
+            strings[0] = "1";
+            return strings[0] + strings[1] + strings[2];
+        }
+        return str;
+    }
+
+
+    /**
      * compte le nombre de caractère qu'il y a dans une liste de char
      * @param chars texte ou faut compter le caractère
      * @param c caractère à compter
@@ -152,28 +201,5 @@ public class Function {
         return listOfFilesName;
     }
 
-    public String printAllSave() {
-        String[] allName = listAllSave();
-        int i = 0, filechoosen;
-        Scanner scanner = new Scanner(System.in);
-        for (String s: allName) {
-            System.out.println(i + " " + s);
-            i++;
-        }
-        System.out.println("\nQuel save veut-tu lire ?");
-        try {
-            filechoosen = scanner.nextInt();
-            if (filechoosen > allName.length-1) {
-                System.out.println("Tu as choisis un fichier qui n'existe pas\nIl va falloir relancer le code pour pouvoir visionner un replay");
-                System.exit(10);
-            }
-            return allName[filechoosen];
-        }
-        catch (Exception e) {
-            System.out.println("Tu as du réaliser une faute d'input\nIl va falloir relancer le code pour pouvoir visionner un replay");
-            System.exit(10);
-        }
-        return "";
-    }
 }
 

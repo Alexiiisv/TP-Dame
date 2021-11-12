@@ -12,8 +12,8 @@ public class ReplayGame {
     private static final ArrayList<String> eachMove = new ArrayList<>();
     private static final Function function = new Function();
     public static void watchReplay(Board board, Player p1, Player p2) {
-        String test = function.printAllSave();
-        readJson(test);
+        String fileName = function.printAllSave();
+        readJson(fileName);
         playReplay(board, p2, p1);
     }
     private static void readJson(String string) {

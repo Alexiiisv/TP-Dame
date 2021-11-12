@@ -1,5 +1,7 @@
 package meilleur.com.model;
 
+import meilleur.com.utilitaire.Function;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -10,6 +12,7 @@ public class Board {
     private final char[][] playBoard = new char[L][H];
     private String input;
     private int numb = 0, pos = 0;
+    private final Function function = new Function();
 
     /** Créer la zone de jeu */
     public void createBoard() {
@@ -79,7 +82,7 @@ public class Board {
         } else if (input.equals("q") || input.equals("Q")) {
             return 0;
         } else return 3;
-        }
+    }
 
 
     /**
@@ -103,6 +106,7 @@ public class Board {
      * @param player2 = joueur adverse
      */
     private void movePionToPosition(int lastX, int lastY, String pos, Player player1, Player player2) {
+        pos = function.moveUpdate(pos, player1, lastX, lastY);
         String[] posSplited = pos.split("");
         int numberOfTileMoved = Integer.parseInt(posSplited[0]);
         int newX = posSplited[2].equals("L") ? lastX - numberOfTileMoved : lastX + numberOfTileMoved;
