@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -33,28 +34,23 @@ public class Function {
      * Il a le choix entre oui et non.
      */
     public String choix() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\n\nBonjour, voulez-vous jouer au Dame ou regarder un replay ou rien faire ? (jouer/replay/quitter)\n");
-        return scanner.nextLine();
+        return askTerminalString();
     }
-
 
     public boolean isBotPlaying() {
-        boolean botornot = true;
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Combien y'aura t'il de joueurs ?\nPar défaut vous serez seul si vous ne remplissez rien");
-        int answer = scanner.nextInt();
+        int answer = askTerminalInt();
         if (answer == 1) {
-            botornot = true;
-
+            return true;
         } else if (answer == 2) {
-            botornot = false;
+            return false;
         } else {
             System.out.println("Vous jouerez donc seul");
-
+            return true;
         }
-        return botornot;
     }
+
     /**
      * retourne un boolean qui correspond a un joueur
      * @return boolean false = player 1
@@ -91,9 +87,17 @@ public class Function {
         if (!data.equals("\t\t\"p\",\n") && !data.equals("\t\t\"P\",\n")) dataToWrite += data;
     }
 
-    /**
-     * Écrit dans le fichier a la fin de la partie
-     */
+    public int inverseOrNotInt(String pos) {
+        if (pos.equals("T") || pos.equals("L")) return -1;
+        return 1;
+    }
+
+    public boolean checkIfHisPions(char c1, Player player) {
+        for (char c2 : player.getLetter()) { if (c2 == c1) return false; }
+        return true;
+    }
+
+    /** Écrit dans le fichier a la fin de la partie */
     public void writeFile() {
         FileWriter fileWritter;
         final String fileName = "src/meilleur/com/save/" + millisToDate() + ".json";
@@ -101,19 +105,28 @@ public class Function {
         try {
             fileWritter = new FileWriter(fileName, true);
             BufferedWriter bw = new BufferedWriter(fileWritter);
-            char[] replastCharArr = dataToWrite.toCharArray();
-            if (countCharInString(replastCharArr, ',') > 2) {
-                for (int i = replastCharArr.length - 1; i >= 0; i--) {
-                    if (replastCharArr[i] == ',') {
-                        replastCharArr[i] = ' ';
-                        break;
-                    }
-                }
-            }
-            bw.write(replastCharArr);
+
+            bw.write(dataToWrite);
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void removeLast() {
+        char[] replastCharArr = dataToWrite.toCharArray();
+        if (countCharInString(replastCharArr) > 2) {
+            for (int i = replastCharArr.length - 1; i >= 0; i--) {
+                if (replastCharArr[i] == ',') {
+                    replastCharArr[i] = ' ';
+                    break;
+                }
+            }
+            StringBuilder str = new StringBuilder();
+            for (char c: replastCharArr) {
+                str.append(c);
+            }
+            dataToWrite = str.toString();
         }
     }
 
@@ -125,14 +138,13 @@ public class Function {
     public String printAllSave() {
         String[] allName = listAllSave();
         int i = 0, filechoosen;
-        Scanner scanner = new Scanner(System.in);
         for (String s : allName) {
             System.out.println(i + " " + s);
             i++;
         }
         System.out.println("\nQuel save veut-tu lire ?");
         try {
-            filechoosen = scanner.nextInt();
+            filechoosen = askTerminalInt();
             if (filechoosen > allName.length - 1) {
                 System.out.println("Tu as choisis un fichier qui n'existe pas\nIl va falloir relancer le code pour pouvoir visionner un replay");
                 System.exit(10);
@@ -156,7 +168,6 @@ public class Function {
     public String moveUpdate(String str, Player p1, int lastX, int lastY) {
         String[] strings = str.split("");
         Pions pions = p1.getPion(lastY, lastX);
-        System.out.println(pions.getClass().getSimpleName());
         if (!strings[0].equals("1") && pions.getClass().getSimpleName().equals("Pion")) {
             strings[0] = "1";
             return strings[0] + strings[1] + strings[2];
@@ -164,17 +175,25 @@ public class Function {
         return str;
     }
 
+    public String askTerminalString() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+    public int askTerminalInt() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
 
     /**
      * compte le nombre de caractère qu'il y a dans une liste de char
      * @param chars texte ou faut compter le caractère
-     * @param c caractère à compter
      * @return le nombre de caractère trouvé
      */
-    private int countCharInString(char[] chars, char c) {
+    private int countCharInString(char[] chars) {
         int i = 0;
         for (char ch: chars) {
-            if (ch == c) i++;
+            if (ch == ',') i++;
         }
         return i;
     }

@@ -3,9 +3,6 @@ package meilleur.com.model;
 import meilleur.com.utilitaire.Function;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class Board {
 
     private final int L = 10, H = 10;
@@ -65,17 +62,19 @@ public class Board {
      */
     public int move(Player player1, Player player2) {
         String reg = "[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])";
-        Scanner scanner = new Scanner(System.in);
         printplayBoard();
-        System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter() + ")\nQue souhaitez vous faire ?");
-        input = scanner.nextLine();
+        System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter()[0] + " et " + player1.getLetter()[1] + ")\nQue souhaitez vous faire ?");
+        input = function.askTerminalString();
 
         if (input.matches(reg)) {
 
             if (player1.movePion(input)) {
                 movePionToPosition(Character.getNumericValue(input.charAt(1)), Character.getNumericValue(input.charAt(0)), input.substring(3), player1, player2);
                 return 1;
-            } else return 3;
+            } else {
+                System.out.println("\nLe déplacement n'as pas pus être réalisé\n");
+                return 3;
+            }
         } else if (input.equals("p") || input.equals("P")) {
             player1.printPion();
             return 3;
@@ -109,8 +108,8 @@ public class Board {
         pos = function.moveUpdate(pos, player1, lastX, lastY);
         String[] posSplited = pos.split("");
         int numberOfTileMoved = Integer.parseInt(posSplited[0]);
-        int newX = posSplited[2].equals("L") ? lastX - numberOfTileMoved : lastX + numberOfTileMoved;
         int newY = posSplited[1].equals("T") ? lastY - numberOfTileMoved : lastY + numberOfTileMoved;
+        int newX = posSplited[2].equals("L") ? lastX - numberOfTileMoved : lastX + numberOfTileMoved;
 
         if (newX <= 9 && newX >= 0 && newY <= 9 && newY >= 0) {
 
@@ -121,13 +120,12 @@ public class Board {
                 player1.updatePionToDame(newX, newY);
                 playBoard[newY][newX] = player1.getPionLetter(newY, newX);
 
-            } else if (playBoard[newY][newX] != player1.getLetter() && playBoard[newY + (newY - lastY)][newX + (newX - lastX)] == '_') {
+            } else if (function.checkIfHisPions(playBoard[newY][newX], player1) && playBoard[newY + (function.inverseOrNotInt(posSplited[1]) *numberOfTileMoved)][newX + (function.inverseOrNotInt(posSplited[2]) *numberOfTileMoved)] == '_') {
 
                 playBoard[newY][newX] = '_';
                 player2.updatePionLive(newY, newX);
                 newX += posSplited[2].equals("L") ? -1 : 1;
                 newY += posSplited[1].equals("T") ? -1 : 1;
-                //System.out.println(newY + " oui " + newX);
                 playBoard[lastY][lastX] = '_';
                 player1.updatePion(lastY, lastX, newX, newY);
                 player1.updatePionToDame(newX, newY);

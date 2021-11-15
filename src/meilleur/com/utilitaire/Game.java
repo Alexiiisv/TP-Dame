@@ -19,6 +19,8 @@ public class Game {
         if (choixGame.equals("jouer") || choixGame.equals("j")) {
             initGame(choixGame);
             inGameF();
+            function.writeFile();
+            System.exit(10);
         } else if (choixGame.equals("replay") || choixGame.equals("r")) {
             initGame(choixGame);
             ReplayGame.watchReplay(board, p1, p2);
@@ -46,6 +48,7 @@ public class Game {
         board.placePion(p2.getAllPion());
         if (!(str.equals("replay") || str.equals("r"))) System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
     }
+
     protected void inGameF() {
         while (inGame) {
             if (choix == 1) {
@@ -54,11 +57,27 @@ public class Game {
             }
             if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
             if (choix == 0) {
-                function.appendDataToResult("\t]\n}");
-                function.writeFile();
-                System.exit(10);
+                function.removeLast();
+                function.appendDataToResult("\t],\n\t\"Winner\": \"Il n'y a pas de gagnant un joueur a quitter la partie\"\n}");
+                inGame = false;
             }
-            function.appendDataToResult(board.ReturnMove());
+            if (board.ReturnMove().length() == 12) function.appendDataToResult(board.ReturnMove());
+            if (haveSomeoneWin() == 2) {
+                function.removeLast();
+                function.appendDataToResult("\t],\n\t\"Winner\": \"" + p1.getName() + "\"\n}");
+                inGame = false;
+            }
+            if (haveSomeoneWin() == 1) {
+                function.removeLast();
+                function.appendDataToResult("\t],\n\t\"Winner\": \"" + p2.getName() + "\"\n}");
+                inGame = false;
+            }
         }
+    }
+
+    private int haveSomeoneWin() {
+        if (p1.getLastPions() == 0) return 2;
+        if (p2.getLastPions() == 0) return 1;
+        return 0;
     }
 }

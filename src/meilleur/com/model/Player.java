@@ -3,15 +3,30 @@ package meilleur.com.model;
 import java.util.ArrayList;
 
 public class Player {
-    private final int id;
     private final ArrayList<Pions> allPion = new ArrayList<>();
-    private final char letter;
+    private final int id;
+    private int lastPions;
+    private final char[] letter;
     private final String name;
+    private boolean winner;
 
     public Player(int id, String name) {
         this.id = id;
-        this.letter = id == 1 ? 'P' : 'p';
+        this.letter = id == 1 ? new char[]{'P', 'D'} : new char[]{'p', 'd'};
         this.name = name;
+        this.winner = false;
+    }
+
+    public int getLastPions() {
+        return lastPions;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 
     /** @return le nom du joueur */
@@ -25,7 +40,7 @@ public class Player {
     }
 
     /** @return lettre du joueur */
-    public char getLetter() {
+    public char[] getLetter() {
         return letter;
     }
 
@@ -41,11 +56,12 @@ public class Player {
             if (y % 2 == 1 && x < 10) x += 2;
             if (y % 2 == 0 && x < 11) x += 2;
 
-            this.allPion.add(new Pion(this.letter, x - 2, y));
+            this.allPion.add(new Pion(this.letter[0], x - 2, y));
 
             if (i % 5 == 0 && x == 11 || x == 10) y++;
             if (i % 5 == 0 && x > 5) x = 0;
         }
+        this.lastPions = this.allPion.size();
     }
 
     /** Affiche tous les Pions du joueur */
@@ -104,6 +120,7 @@ public class Player {
         for (Pions pion : this.allPion) {
             if (pion.getPosY() == y && pion.getPosX() == x) {
                 pion.setAlive(false);
+                this.lastPions--;
                 break;
             }
         }
@@ -136,14 +153,14 @@ public class Player {
         if (this.id == 1 && y == 0 && x <= 9 && x >= 0)
         {
             pion = getPion(y, x);
-            this.allPion.add(new Dame('D', pion.getPosX(), pion.getPosY()));
+            this.allPion.add(new Dame(this.letter[1], pion.getPosX(), pion.getPosY()));
             this.allPion.remove(pion);
 
         }
         else if (this.id == 0 && y == 9 && x <= 9 && x >= 0)
         {
             pion = getPion(y, x);
-            this.allPion.add(new Dame('d', pion.getPosX(), pion.getPosY()));
+            this.allPion.add(new Dame(this.letter[1], pion.getPosX(), pion.getPosY()));
             this.allPion.remove(pion);
         }
 
