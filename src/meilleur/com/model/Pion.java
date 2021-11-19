@@ -5,11 +5,6 @@ public class Pion extends Pions {
     public Pion(char letter, int posX, int posY) {
         super(letter, posX, posY);
     }
-
-    @Override
-    public String toString() {
-        return "Jsuis un Pion\nJe me trouve a la position X : " + this.posY + " Y : " + this.posX;
-    }
 }
 
 /*

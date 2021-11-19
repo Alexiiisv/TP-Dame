@@ -53,6 +53,7 @@ public class Game {
         while (inGame) {
             if (choix == 1) {
                 player = function.playerSwitch();
+                System.out.println(function.botMoves(getPlayer(player)));
                 choix = 3;
             }
             if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
@@ -61,17 +62,24 @@ public class Game {
                 function.appendDataToResult("\t],\n\t\"Winner\": \"Il n'y a pas de gagnant un joueur a quitter la partie\"\n}");
                 inGame = false;
             }
-            if (board.ReturnMove().length() == 12) function.appendDataToResult(board.ReturnMove());
-            if (haveSomeoneWin() == 2) {
-                function.removeLast();
-                function.appendDataToResult("\t],\n\t\"Winner\": \"" + p1.getName() + "\"\n}");
-                inGame = false;
+            if (board.ReturnMove().length() == 12 && board.isHaveMoved()) {
+                function.appendDataToResult(board.ReturnMove());
+                board.setHaveMoved(false);
             }
-            if (haveSomeoneWin() == 1) {
-                function.removeLast();
-                function.appendDataToResult("\t],\n\t\"Winner\": \"" + p2.getName() + "\"\n}");
-                inGame = false;
-            }
+            conditionIfWinner();
+        }
+    }
+
+    private void conditionIfWinner() {
+        if (haveSomeoneWin() == 1) {
+            function.removeLast();
+            function.appendDataToResult("\t],\n\t\"Winner\": \"" + p1.getName() + "\"\n}");
+            inGame = false;
+        }
+        if (haveSomeoneWin() == 2) {
+            function.removeLast();
+            function.appendDataToResult("\t],\n\t\"Winner\": \"" + p2.getName() + "\"\n}");
+            inGame = false;
         }
     }
 

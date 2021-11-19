@@ -45,4 +45,7 @@ public class Pions {
         this.alive = alive;
     }
 
+    public String toStringBot() {
+        return this.posY + "" + this.posX;//tbd but movement
+    }
 }

@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 public class Player {
     private final ArrayList<Pions> allPion = new ArrayList<>();
+    private final ArrayList<String> possibleMoves = new ArrayList<>();
+    private final String[] allMoves = new String[]{"1TR", "1TL", "1BR", "1BL"};
     private final int id;
     private int lastPions;
     private final char[] letter;
     private final String name;
     private boolean winner;
+    private final Board board = new Board();
 
     public Player(int id, String name) {
         this.id = id;
@@ -62,6 +65,10 @@ public class Player {
             if (i % 5 == 0 && x > 5) x = 0;
         }
         this.lastPions = this.allPion.size();
+
+        //if (this.id == 1) this.allPion.add(new Pion(this.letter[0], 2, 1));
+        //if (this.id == 0) this.allPion.add(new Pion(this.letter[0], 3, 4));
+        //this.lastPions = this.allPion.size();
     }
 
     /** Affiche tous les Pions du joueur */
@@ -71,7 +78,7 @@ public class Player {
         for (Pions p : this.allPion) {
             if (p.isAlive()) {
                 i++;
-                System.out.println(i + " " + p.toString());
+                System.out.println(i + " " + p.toStringBot());
             }
         }
         System.out.println();
@@ -163,6 +170,24 @@ public class Player {
             this.allPion.add(new Dame(this.letter[1], pion.getPosX(), pion.getPosY()));
             this.allPion.remove(pion);
         }
+    }
+    //to fix
+    public ArrayList<String> checkPossibleMoves() {
+        possibleMoves.clear();
+        System.out.println("voici les pions du joueurs " + this.id + "\n");
+        int i = 0;
+        for (Pions p : this.allPion) {
+            for (String str: allMoves) {
+                String[] strsplited = str.split("");
+                if (p.isAlive() &&
+                        !(board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check1", this, strsplited) ||
+                                board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check1", this, strsplited))) {
+                    i++;
+                    possibleMoves.add(p.toStringBot() + " " + str);
+                }
+            }
 
+        }
+        return possibleMoves;
     }
 }

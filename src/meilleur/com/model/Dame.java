@@ -5,11 +5,6 @@ public class Dame extends Pions {
     public Dame(char letter, int posX, int posY) {
         super(letter, posX, posY);
     }
-
-    @Override
-    public String toString() {
-        return "Jsuis une Dame\nJe me trouve a la position X : " + this.posY + " Y : " + this.posX;
-    }
 }
 
 
