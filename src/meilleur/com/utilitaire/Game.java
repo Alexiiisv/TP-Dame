@@ -3,6 +3,7 @@ package meilleur.com.utilitaire;
 import meilleur.com.model.Board;
 import meilleur.com.model.Player;
 
+
 public class Game {
     public boolean botornot = false;
     Function function = new Function();
@@ -53,10 +54,12 @@ public class Game {
         while (inGame) {
             if (choix == 1) {
                 player = function.playerSwitch();
-                System.out.println(function.botMoves(getPlayer(player)));
+                System.out.println(function.botMoves(getPlayer(player), board.playBoard));
                 choix = 3;
             }
-            if (choix == 3) choix = board.move(getPlayer(player), getPlayer(!player));
+            if (choix == 3) {
+                choix = board.move(getPlayer(player), getPlayer(!player));
+            }
             if (choix == 0) {
                 function.removeLast();
                 function.appendDataToResult("\t],\n\t\"Winner\": \"Il n'y a pas de gagnant un joueur a quitter la partie\"\n}");
@@ -68,6 +71,7 @@ public class Game {
             }
             conditionIfWinner();
         }
+        System.out.println(getPlayer(player).getName() + " a gagné");
     }
 
     private void conditionIfWinner() {

@@ -16,7 +16,6 @@ public class Function {
     public boolean whoPlays = true;
     private String dataToWrite = "";
 
-
     /**
      * Affichage du menu principale avec instruction du jeu
      */
@@ -26,7 +25,7 @@ public class Function {
         System.out.println("\n\t\tINSTRUCTION\nLe jeu se joue de la sorte");
         System.out.println("Lorsque c'est votre tour vous devez renseigner la position de votre pion '11' suivi d'un espace\napres il faut un nombre de coups (1 pour un pion/1-9 pour la dame) suivi de soit");
         System.out.println("'TL' pour top left, 'TR' pour top right, 'BL' pour bottom left, 'BR' pour bottom right\nPar exemple on écrit '11 1TL' pour bouger le pion a la position 1-1 du jeu de 1 sur la diagonale gauche haut");
-        System.out.println("Le joueur 1 joue les 'p' et le joueur 2 joue les 'P'");
+        System.out.println("Le joueur 1 joue les 'p' et le joueur 2 joue les 'P'\nTous les déplacements possibles affichés fonctionne pour les Pions pas les Dames");
     }
 
     /**
@@ -51,8 +50,8 @@ public class Function {
         }
     }
 
-    public ArrayList<String> botMoves(Player p1){
-        return p1.checkPossibleMoves();
+    public ArrayList<String> botMoves(Player p1, char[][] playboard){
+        return p1.checkPossibleMoves(playboard);
     }
 
     /**
@@ -186,7 +185,14 @@ public class Function {
 
     public int askTerminalInt() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        int result = 0;
+        try {
+            result = scanner.nextInt();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**

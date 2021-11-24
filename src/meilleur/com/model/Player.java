@@ -2,6 +2,7 @@ package meilleur.com.model;
 
 import java.util.ArrayList;
 
+
 public class Player {
     private final ArrayList<Pions> allPion = new ArrayList<>();
     private final ArrayList<String> possibleMoves = new ArrayList<>();
@@ -64,11 +65,12 @@ public class Player {
             if (i % 5 == 0 && x == 11 || x == 10) y++;
             if (i % 5 == 0 && x > 5) x = 0;
         }
-        this.lastPions = this.allPion.size();
+
 
         //if (this.id == 1) this.allPion.add(new Pion(this.letter[0], 2, 1));
         //if (this.id == 0) this.allPion.add(new Pion(this.letter[0], 3, 4));
-        //this.lastPions = this.allPion.size();
+
+        this.lastPions = this.allPion.size();
     }
 
     /** Affiche tous les Pions du joueur */
@@ -98,6 +100,7 @@ public class Player {
                 return true;
             }
         }
+        System.out.println("aucun pion t'appartenant se trouve a la position que tu as choisis");
         return false;
     }
 
@@ -171,18 +174,18 @@ public class Player {
             this.allPion.remove(pion);
         }
     }
+
     //to fix
-    public ArrayList<String> checkPossibleMoves() {
+    public ArrayList<String> checkPossibleMoves(char[][] playboard) {
         possibleMoves.clear();
-        System.out.println("voici les pions du joueurs " + this.id + "\n");
-        int i = 0;
+        System.out.println("voici les déplacements possible de " + this.getName() + "\n");
         for (Pions p : this.allPion) {
-            for (String str: allMoves) {
+            for (String str: this.allMoves) {
                 String[] strsplited = str.split("");
+
                 if (p.isAlive() &&
-                        !(board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check1", this, strsplited) ||
-                                board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check1", this, strsplited))) {
-                    i++;
+                        (board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check1", null, strsplited, playboard) ||
+                                board.checkIfMovePossible(p.getPosY(), p.getPosX(), "check2", this, strsplited, playboard))) {
                     possibleMoves.add(p.toStringBot() + " " + str);
                 }
             }
