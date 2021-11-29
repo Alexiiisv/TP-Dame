@@ -3,13 +3,15 @@ package meilleur.com.utilitaire;
 import meilleur.com.model.Board;
 import meilleur.com.model.Player;
 
+import java.util.ArrayList;
+
 
 public class Game {
     public boolean botornot = false;
     Function function = new Function();
     Board board = new Board();
-    Player p1 = new Player(0, "Jackie");
-    Player p2 = new Player(1, "Michel");
+    Player p1 = new Player(0);
+    Player p2 = new Player(1);
     int choix = 1;
     boolean inGame = true, player = true;
 
@@ -40,7 +42,16 @@ public class Game {
 
     /** initialise le jeu */
     void initGame(String str) {
-        if (!(str.equals("replay") || str.equals("r"))) botornot = function.isBotPlaying();
+        if (!(str.equals("replay") || str.equals("r"))) {
+            botornot = function.isBotPlaying();
+            System.out.println("Comment s'appelle le joueur n°2 ?");
+            p2.setName(function.askTerminalString());
+            if (botornot) p1.setName("AI");
+            else {
+                System.out.println("Comment s'appelle le joueur n°1 ?");
+                p1.setName(function.askTerminalString());
+            }
+        }
         function.appendDataToResult(null, p1, p2);
         board.createBoard();
         p1.initPion();
@@ -54,7 +65,8 @@ public class Game {
         while (inGame) {
             if (choix == 1) {
                 player = function.playerSwitch();
-                System.out.println(function.botMoves(getPlayer(player), board.playBoard));
+                ArrayList<String> value = function.botMoves(getPlayer(player), board.playBoard);
+                if (!getPlayer(player).getName().equals("AI")) System.out.println(value);
                 choix = 3;
             }
             if (choix == 3) {

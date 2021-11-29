@@ -3,6 +3,7 @@ package meilleur.com.model;
 import meilleur.com.utilitaire.Function;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
 
@@ -82,10 +83,16 @@ public class Board {
     public int move(Player player1, Player player2) {
         haveMoved = true;
         String reg = "[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])";
-        printplayBoard();
-        System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter()[0]
-                + " et " + player1.getLetter()[1] + ")\nQue souhaitez vous faire ?");
-        input = function.askTerminalString();
+        if (player1.getName().equals("AI")) {
+            input = player1.returnOneMove();
+            System.out.println("\nLe bot réalise son déplacement\n");
+            function.waitTime(2000, 'P');
+        } else {
+            printplayBoard();
+            System.out.println(player1.getName() + " c'est a vous de jouer ! (" + player1.getLetter()[0]
+                    + " et " + player1.getLetter()[1] + ")\nQue souhaitez vous faire ?");
+            input = function.askTerminalString();
+        }
 
         if (input.matches(reg)) {
 
@@ -172,7 +179,6 @@ public class Board {
         }
     }
 
-    //PlayBoard tous les caractère == '\u0000' ??????
     public boolean checkIfMovePossible(int lastYPos, int lastXPos, String check, Player player1, String[] posSplited, char[][] playBoardNotBugged) {
         int numberOfTileMoved = Integer.parseInt(posSplited[0]);
         int newYPos = posSplited[1].equals("T") ? lastYPos - numberOfTileMoved : lastYPos + numberOfTileMoved;
@@ -181,23 +187,27 @@ public class Board {
         playBoardNotBugged[0][0] = ' ';
         if (playBoardNotBugged[newYPos][newXPos] == '_' && check.equals("check1")) return true;
         else if (playBoardNotBugged[newYPos][newXPos] != '_' && check.equals("check1")) return false;
-
+        
         if (posSplited[1].equals("T") && posSplited[2].equals("R") && lastYPos != 0 && lastXPos != 9 && newXPos < 9 && newYPos > 0) {
+
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
                     [newXPos + (function.inverseOrNotInt(posSplited[2]) * numberOfTileMoved)] == '_';
 
         }else if (posSplited[1].equals("T") && posSplited[2].equals("L") && lastYPos != 0 && lastXPos != 0 && newXPos > 0 && newYPos > 0) {
+
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
                     [newXPos + (function.inverseOrNotInt(posSplited[2]) * numberOfTileMoved)] == '_';
 
         } else if (posSplited[1].equals("B") && posSplited[2].equals("R") && lastYPos != 9 && lastXPos != 9 && newYPos < 9 && newXPos < 9) {
+
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
                     [newXPos + (function.inverseOrNotInt(posSplited[2]) * numberOfTileMoved)] == '_';
 
         } else if (posSplited[1].equals("B") && posSplited[2].equals("L") && lastYPos != 9 && lastXPos != 0 && newYPos < 9 && newXPos > 0) {
+
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
                     [newXPos + (function.inverseOrNotInt(posSplited[2]) * numberOfTileMoved)] == '_';

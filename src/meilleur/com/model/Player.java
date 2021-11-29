@@ -1,6 +1,7 @@
 package meilleur.com.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Player {
@@ -10,14 +11,13 @@ public class Player {
     private final int id;
     private int lastPions;
     private final char[] letter;
-    private final String name;
+    private String name;
     private boolean winner;
     private final Board board = new Board();
 
-    public Player(int id, String name) {
+    public Player(int id) {
         this.id = id;
         this.letter = id == 1 ? new char[]{'P', 'D'} : new char[]{'p', 'd'};
-        this.name = name;
         this.winner = false;
     }
 
@@ -33,7 +33,11 @@ public class Player {
         this.winner = winner;
     }
 
-    /** @return le nom du joueur */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+        /** @return le nom du joueur */
     public String getName() {
         return name;
     }
@@ -178,7 +182,9 @@ public class Player {
     //to fix
     public ArrayList<String> checkPossibleMoves(char[][] playboard) {
         possibleMoves.clear();
-        System.out.println("voici les déplacements possible de " + this.getName() + "\n");
+        if (!name.equals("AI")) {
+            System.out.println("voici les déplacements possible de " + this.getName() + "\n");
+        }
         for (Pions p : this.allPion) {
             for (String str: this.allMoves) {
                 String[] strsplited = str.split("");
@@ -192,5 +198,11 @@ public class Player {
 
         }
         return possibleMoves;
+    }
+
+    public String returnOneMove(){
+        Random randomMove = new Random();
+        int index = randomMove.nextInt(possibleMoves.size());
+        return possibleMoves.get(index);
     }
 }

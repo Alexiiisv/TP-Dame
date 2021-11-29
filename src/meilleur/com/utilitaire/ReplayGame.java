@@ -39,7 +39,7 @@ public class ReplayGame {
         int i = 0;
         board.printplayBoard();
         for (String str: eachMove) {
-            waitTime();
+            function.waitTime(1500, 'R');
             if (i ==0) {
                 board.move(p1, p2, str);
                 i++;
@@ -52,11 +52,4 @@ public class ReplayGame {
         System.exit(0);
     }
 
-    private static void waitTime() {
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

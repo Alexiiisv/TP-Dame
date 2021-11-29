@@ -230,5 +230,21 @@ public class Function {
         return listOfFilesName;
     }
 
+
+    public void waitTime(int milli, char state) {
+        try {
+            if (state == 'P') {
+                for (int i = 0; i < milli/400; i++) {
+                    System.out.print(". ");
+                    Thread.sleep(milli/5);
+                }
+                System.out.println('\n');
+            }
+            if (state == 'R') Thread.sleep(milli);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
