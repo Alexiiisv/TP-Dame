@@ -33,7 +33,7 @@ public class Function {
      * Il a le choix entre oui et non.
      */
     public String choix() {
-        System.out.println("\n\nBonjour, voulez-vous jouer au Dame ou regarder un replay ou rien faire ? (jouer/replay/quitter)\n");
+        System.out.println("\n\nBonjour, voulez-vous jouer aux Dames, regarder un replay ou rien faire ? (jouer/replay/quitter)\n");
         return askTerminalString();
     }
 
@@ -149,12 +149,12 @@ public class Function {
         try {
             filechoosen = askTerminalInt();
             if (filechoosen > allName.length - 1) {
-                System.out.println("Tu as choisis un fichier qui n'existe pas\nIl va falloir relancer le code pour pouvoir visionner un replay");
+                System.out.println("Tu as choisi un fichier qui n'existe pas\nIl faudra relancer le code pour pouvoir visionner un replay");
                 System.exit(10);
             }
             return allName[filechoosen];
         } catch (Exception e) {
-            System.out.println("Tu as du réaliser une faute d'input\nIl va falloir relancer le code pour pouvoir visionner un replay");
+            System.out.println("Tu as du réaliser une faute d'input\nIl faudra relancer le code pour pouvoir visionner un replay");
             System.exit(10);
         }
         return "";

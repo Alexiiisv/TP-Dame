@@ -79,7 +79,7 @@ public class Player {
 
     /** Affiche tous les Pions du joueur */
     public void printPion() {
-        System.out.println("voici les pions du joueurs " + this.id + "\n");
+        System.out.println("Voici les pions du joueurs " + this.id + "\n");
         int i = 0;
         for (Pions p : this.allPion) {
             if (p.isAlive()) {
@@ -183,7 +183,7 @@ public class Player {
     public ArrayList<String> checkPossibleMoves(char[][] playboard) {
         possibleMoves.clear();
         if (!name.equals("AI")) {
-            System.out.println("voici les déplacements possible de " + this.getName() + "\n");
+            System.out.println("Voici les déplacements possibles de " + this.getName() + "\n");
         }
         for (Pions p : this.allPion) {
             for (String str: this.allMoves) {
@@ -197,12 +197,13 @@ public class Player {
             }
 
         }
+        returnOneMove();
         return possibleMoves;
     }
 
     public String returnOneMove(){
         Random randomMove = new Random();
-        int index = randomMove.nextInt(possibleMoves.size());
-        return possibleMoves.get(index);
+    int index = randomMove.nextInt(possibleMoves.size());
+    return possibleMoves.get(index);
     }
 }

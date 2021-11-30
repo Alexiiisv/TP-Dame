@@ -74,7 +74,7 @@ public class Game {
             }
             if (choix == 0) {
                 function.removeLast();
-                function.appendDataToResult("\t],\n\t\"Winner\": \"Il n'y a pas de gagnant un joueur a quitter la partie\"\n}");
+                function.appendDataToResult("\t],\n\t\"Winner\": \"Il n'y a pas de gagnant un joueur a quitté la partie\"\n}");
                 inGame = false;
             }
             if (board.ReturnMove().length() == 12 && board.isHaveMoved()) {

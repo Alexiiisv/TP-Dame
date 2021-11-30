@@ -170,11 +170,11 @@ public class Board {
                 playBoard[newYPos][newXPos] = player1.getPionLetter(newYPos, newXPos);
 
             } else {
-                System.out.println("Ce pion n'as pas pus etre déplacer. Vous devez rechoisir une action");
+                System.out.println("Ce pion n'a pas pu être déplacé. Vous devez rechoisir une action");
                 move(player1, player2);
             }
         } else {
-            System.out.println("Ce pion n'as pas pus etre déplacer. Vous devez rechoisir une action");
+            System.out.println("Ce pion n'a pas pu être déplacé. Vous devez rechoisir une action");
             move(player1, player2);
         }
     }
@@ -231,10 +231,10 @@ public class Board {
             } else return false;
         }
         return true;
-    }
 
 
 
+}
 }
 
 
