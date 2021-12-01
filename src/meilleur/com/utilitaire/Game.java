@@ -15,7 +15,9 @@ public class Game {
     int choix = 1;
     boolean inGame = true, player = true;
 
-    /** Corps du jeu, endroit ou le jeu fonctionne */
+    /**
+     * Corps du jeu, endroit ou le jeu fonctionne
+     */
     public void newGame() {
         function.mainMenu();
         String choixGame = function.choix();
@@ -32,6 +34,7 @@ public class Game {
 
     /**
      * retourne un Player suivant un boolean
+     *
      * @param b = boolean equivalent au joueur
      * @return Player
      */
@@ -40,7 +43,9 @@ public class Game {
         return p2;
     }
 
-    /** initialise le jeu */
+    /**
+     * initialise le jeu
+     */
     void initGame(String str) {
         if (!(str.equals("replay") || str.equals("r"))) {
             botornot = function.isBotPlaying();
@@ -58,9 +63,13 @@ public class Game {
         p2.initPion();
         board.placePion(p1.getAllPion());
         board.placePion(p2.getAllPion());
-        if (!(str.equals("replay") || str.equals("r"))) System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
+        if (!(str.equals("replay") || str.equals("r")))
+            System.out.println("\nLe match opposera " + p1.getName() + " & " + p2.getName() + "\n");
     }
 
+    /**
+     * partie par rapport a la partie
+     */
     protected void inGameF() {
         while (inGame) {
             if (choix == 1) {
@@ -86,6 +95,9 @@ public class Game {
         System.out.println(getPlayer(player).getName() + " a gagné");
     }
 
+    /**
+     * condition de victoire
+     */
     private void conditionIfWinner() {
         if (haveSomeoneWin() == 1) {
             function.removeLast();
@@ -99,6 +111,9 @@ public class Game {
         }
     }
 
+    /**
+     * @return 0, 1, 2
+     */
     private int haveSomeoneWin() {
         if (p1.getLastPions() == 0) return 2;
         if (p2.getLastPions() == 0) return 1;

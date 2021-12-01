@@ -3,7 +3,6 @@ package meilleur.com.model;
 import meilleur.com.utilitaire.Function;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Board {
 
@@ -15,7 +14,9 @@ public class Board {
     private final Function function = new Function();
     private boolean haveMoved = true;
 
-    /** Créer la zone de jeu */
+    /**
+     * Créer la zone de jeu
+     */
     public void createBoard() {
         for (char[] col : playBoard) {
 
@@ -32,21 +33,25 @@ public class Board {
         }
     }
 
-    /** place les pions de chaque joueur */
+    /**
+     * place les pions de chaque joueur
+     */
     public void placePion(ArrayList<Pions> objects) {
         for (Pions o : objects) {
             playBoard[o.getPosY()][o.getPosX()] = o.getLetter();
         }
     }
 
-    /** Affiche la zone de jeu */
+    /**
+     * Affiche la zone de jeu
+     */
     public void printplayBoard() {
         int i = 0;
         System.out.println("  | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n  |   |   |   |   |   |   |   |   |   |   |");
 
         for (char[] s : playBoard) {
             System.out.print(i + " | ");
-            for (char c: s) {
+            for (char c : s) {
                 System.out.print(c + " | ");
             }
             System.out.println();
@@ -65,6 +70,7 @@ public class Board {
 
     /**
      * retourne le déplacement réalisé par le joueur pour l'afficher sur le json
+     *
      * @return le déplacement réalisé par le joueur
      */
     public String ReturnMove() {
@@ -73,12 +79,13 @@ public class Board {
 
     /**
      * Demande l'action que le joueur veut faire et essaie de la realiser
+     *
      * @param player1 = joueur qui joue
      * @param player2 = joueur adverse
      * @return Integer qui équivaut a une action;<p>
-     *          1 = déplacement réalisé et fonctionnel<p>
-     *          2 = demande d'information a propos des pions d'un joueur<p>
-     *          0 = fin de partie<p>
+     * 1 = déplacement réalisé et fonctionnel<p>
+     * 2 = demande d'information a propos des pions d'un joueur<p>
+     * 0 = fin de partie<p>
      */
     public int move(Player player1, Player player2) {
         haveMoved = true;
@@ -118,9 +125,10 @@ public class Board {
 
     /**
      * Faire les deplacements des pions lors de replay
+     *
      * @param player1 = joueur qui joue
      * @param player2 = joueur adverse
-     * @param str = move actuelle
+     * @param str     = move actuelle
      */
     public void move(Player player1, Player player2, String str) {
         System.out.println("\n\n\n");
@@ -130,11 +138,12 @@ public class Board {
 
     /**
      * Déplace le pion a la case demandée, si c'est possible le code se réalise et on passe au joueur suivant sinon on redemande au joueur de jouer
+     *
      * @param lastXPos = position du pion avant déplacement sur l'axe X
      * @param lastYPos = position du pion avant déplacement sur l'axe Y
-     * @param pos = information donnée par le joueur pour le déplacement
-     * @param player1 = joueur qui joue
-     * @param player2 = joueur adverse
+     * @param pos      = information donnée par le joueur pour le déplacement
+     * @param player1  = joueur qui joue
+     * @param player2  = joueur adverse
      */
     private void movePionToPosition(int lastXPos, int lastYPos, String pos, Player player1, Player player2) {
         pos = function.moveUpdate(pos, player1, lastXPos, lastYPos);
@@ -158,7 +167,7 @@ public class Board {
                 if (dameMoveAllowed(lastXPos, lastYPos, posSplited, player1, player2)) {
                     playBoard[posPionsAdverse[0]][posPionsAdverse[1]] = '_';
                     player2.updatePionLive(posPionsAdverse[0], posPionsAdverse[1]);
-                }else {
+                } else {
                     playBoard[newYPos][newXPos] = '_';
                     player2.updatePionLive(newYPos, newXPos);
                 }
@@ -187,14 +196,14 @@ public class Board {
         playBoardNotBugged[0][0] = ' ';
         if (playBoardNotBugged[newYPos][newXPos] == '_' && check.equals("check1")) return true;
         else if (playBoardNotBugged[newYPos][newXPos] != '_' && check.equals("check1")) return false;
-        
+
         if (posSplited[1].equals("T") && posSplited[2].equals("R") && lastYPos != 0 && lastXPos != 9 && newXPos < 9 && newYPos > 0) {
 
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
                     [newXPos + (function.inverseOrNotInt(posSplited[2]) * numberOfTileMoved)] == '_';
 
-        }else if (posSplited[1].equals("T") && posSplited[2].equals("L") && lastYPos != 0 && lastXPos != 0 && newXPos > 0 && newYPos > 0) {
+        } else if (posSplited[1].equals("T") && posSplited[2].equals("L") && lastYPos != 0 && lastXPos != 0 && newXPos > 0 && newYPos > 0) {
 
             return function.checkIfHisPions(playBoardNotBugged[newYPos][newXPos], player1)
                     && playBoardNotBugged[newYPos + (function.inverseOrNotInt(posSplited[1]) * numberOfTileMoved)]
@@ -219,13 +228,12 @@ public class Board {
         int countPionsAdverse = 0;
         for (int i = 1; i <= Integer.parseInt(posSplited[0]); i++) {
             if (countPionsAdverse < 2) {
-                for (char c1: p2.getLetter()) {
-                    if (playBoard[lastYPos + function.inverseOrNotInt(posSplited[1])*i]
-                                 [lastXPos + function.inverseOrNotInt(posSplited[2])*i] == c1) {
+                for (char c1 : p2.getLetter()) {
+                    if (playBoard[lastYPos + function.inverseOrNotInt(posSplited[1]) * i]
+                            [lastXPos + function.inverseOrNotInt(posSplited[2]) * i] == c1) {
                         countPionsAdverse++;
-                        posPionsAdverse[0] = lastYPos + function.inverseOrNotInt(posSplited[1])*i;
-                        posPionsAdverse[1] = lastXPos + function.inverseOrNotInt(posSplited[2])*i;
-                        System.out.println(countPionsAdverse);
+                        posPionsAdverse[0] = lastYPos + function.inverseOrNotInt(posSplited[1]) * i;
+                        posPionsAdverse[1] = lastXPos + function.inverseOrNotInt(posSplited[2]) * i;
                     }
                 }
             } else return false;
@@ -233,8 +241,7 @@ public class Board {
         return true;
 
 
-
-}
+    }
 }
 
 

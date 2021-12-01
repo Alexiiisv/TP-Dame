@@ -37,22 +37,30 @@ public class Player {
         this.name = name;
     }
 
-        /** @return le nom du joueur */
+    /**
+     * @return le nom du joueur
+     */
     public String getName() {
         return name;
     }
 
-    /** retourne la liste de tous les pions */
+    /**
+     * retourne la liste de tous les pions
+     */
     public ArrayList<Pions> getAllPion() {
         return allPion;
     }
 
-    /** @return lettre du joueur */
+    /**
+     * @return lettre du joueur
+     */
     public char[] getLetter() {
         return letter;
     }
 
-    /** Initialise la position des pions */
+    /**
+     * Initialise la position des pions
+     */
     public void initPion() {
         int y = id == 0 ? 0 : 6, x = 0;
 
@@ -77,14 +85,17 @@ public class Player {
         this.lastPions = this.allPion.size();
     }
 
-    /** Affiche tous les Pions du joueur */
+    /**
+     * Affiche tous les Pions du joueur
+     */
     public void printPion() {
-        System.out.println("Voici les pions du joueurs " + this.id + "\n");
+        System.out.println("Voici les pions du joueur " + this.id + "\n\nID  pos");
         int i = 0;
         for (Pions p : this.allPion) {
             if (p.isAlive()) {
+                if (i < 10) System.out.println(i + "   " + p.toStringBot());
+                else System.out.println(i + "  " + p.toStringBot());
                 i++;
-                System.out.println(i + " " + p.toStringBot());
             }
         }
         System.out.println();
@@ -92,6 +103,7 @@ public class Player {
 
     /**
      * verifie si un pion existe a une position donnée
+     *
      * @param move = placement du pion que le joueur veut bouger
      * @return true si un pion existe a la position donnée<p>false si n'existe pas
      */
@@ -110,10 +122,11 @@ public class Player {
 
     /**
      * update la position du pion a la position lastX, lastY
+     *
      * @param lastY {@code int} = position avant déplacement sur l'axe Y
      * @param lastX {@code int} = position avant déplacement sur l'axe X
-     * @param newX {@code int} = position apres déplacement sur l'axe X
-     * @param newY {@code int} = position apres déplacement sur l'axe Y
+     * @param newX  {@code int} = position apres déplacement sur l'axe X
+     * @param newY  {@code int} = position apres déplacement sur l'axe Y
      */
     public void updatePion(int lastY, int lastX, int newX, int newY) {
         for (Pions pion : this.allPion) {
@@ -127,6 +140,7 @@ public class Player {
 
     /**
      * update la variable {@code boolean}
+     *
      * @param y {@code int}
      * @param x {@code int}
      */
@@ -151,6 +165,7 @@ public class Player {
 
     /**
      * recup le pion a la position x - y
+     *
      * @param y {@code int}
      * @param x {@code int}
      * @return retourne un Pion si il existe sinon null
@@ -164,15 +179,12 @@ public class Player {
 
     public void updatePionToDame(int x, int y) {
         Pions pion;
-        if (this.id == 1 && y == 0 && x <= 9 && x >= 0)
-        {
+        if (this.id == 1 && y == 0 && x <= 9 && x >= 0) {
             pion = getPion(y, x);
             this.allPion.add(new Dame(this.letter[1], pion.getPosX(), pion.getPosY()));
             this.allPion.remove(pion);
 
-        }
-        else if (this.id == 0 && y == 9 && x <= 9 && x >= 0)
-        {
+        } else if (this.id == 0 && y == 9 && x <= 9 && x >= 0) {
             pion = getPion(y, x);
             this.allPion.add(new Dame(this.letter[1], pion.getPosX(), pion.getPosY()));
             this.allPion.remove(pion);
@@ -183,10 +195,10 @@ public class Player {
     public ArrayList<String> checkPossibleMoves(char[][] playboard) {
         possibleMoves.clear();
         if (!name.equals("AI")) {
-            System.out.println("Voici les déplacements possibles de " + this.getName() + "\n");
+            System.out.println("\nVoici les déplacements possibles de " + this.getName() + "\n");
         }
         for (Pions p : this.allPion) {
-            for (String str: this.allMoves) {
+            for (String str : this.allMoves) {
                 String[] strsplited = str.split("");
 
                 if (p.isAlive() &&
@@ -201,9 +213,9 @@ public class Player {
         return possibleMoves;
     }
 
-    public String returnOneMove(){
+    public String returnOneMove() {
         Random randomMove = new Random();
-    int index = randomMove.nextInt(possibleMoves.size());
-    return possibleMoves.get(index);
+        int index = randomMove.nextInt(possibleMoves.size());
+        return possibleMoves.get(index);
     }
 }

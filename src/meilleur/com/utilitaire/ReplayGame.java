@@ -11,11 +11,13 @@ import java.util.Scanner;
 public class ReplayGame {
     private static final ArrayList<String> eachMove = new ArrayList<>();
     private static final Function function = new Function();
+
     public static void watchReplay(Board board, Player p1, Player p2) {
         String fileName = function.printAllSave();
         readJson(fileName);
         playReplay(board, p2, p1);
     }
+
     private static void readJson(String string) {
         String reg = "[0-9][0-9] [1-9]([T^][$L]|[T^][$R]|[B^][$R]|[B^][$L])";
         try {
@@ -38,13 +40,12 @@ public class ReplayGame {
     private static void playReplay(Board board, Player p1, Player p2) {
         int i = 0;
         board.printplayBoard();
-        for (String str: eachMove) {
+        for (String str : eachMove) {
             function.waitTime(1500, 'R');
-            if (i ==0) {
+            if (i == 0) {
                 board.move(p1, p2, str);
                 i++;
-            }
-            else {
+            } else {
                 board.move(p2, p1, str);
                 i--;
             }

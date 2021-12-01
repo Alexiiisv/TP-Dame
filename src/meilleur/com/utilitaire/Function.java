@@ -24,7 +24,7 @@ public class Function {
         System.out.println("Ce jeu a été créer par Yohan MOREN et Alexis VELLEINE.\nC'est un jeu de Dame, il peut se jouer seul ou a 2.");
         System.out.println("\n\t\tINSTRUCTION\nLe jeu se joue de la sorte");
         System.out.println("Lorsque c'est votre tour vous devez renseigner la position de votre pion '11' suivi d'un espace\napres il faut un nombre de coups (1 pour un pion/1-9 pour la dame) suivi de soit");
-        System.out.println("'TL' pour top left, 'TR' pour top right, 'BL' pour bottom left, 'BR' pour bottom right\nPar exemple on écrit '11 1TL' pour bouger le pion a la position 1-1 du jeu de 1 sur la diagonale gauche haut");
+        System.out.println("'TL' pour top left, 'TR' pour top right, 'BL' pour bottom left, 'BR' pour bottom right\nPar exemple on écrit '61 1TL' pour bouger le pion a la position 6-1 du jeu de 1 sur la diagonale gauche haut");
         System.out.println("Le joueur 1 joue les 'p' et le joueur 2 joue les 'P'\nTous les déplacements possibles affichés fonctionne pour les Pions pas les Dames");
     }
 
@@ -50,12 +50,13 @@ public class Function {
         }
     }
 
-    public ArrayList<String> botMoves(Player p1, char[][] playboard){
+    public ArrayList<String> botMoves(Player p1, char[][] playboard) {
         return p1.checkPossibleMoves(playboard);
     }
 
     /**
      * retourne un boolean qui correspond a un joueur
+     *
      * @return boolean false = player 1
      */
     public boolean playerSwitch() {
@@ -72,7 +73,8 @@ public class Function {
 
     /**
      * a utiliser en debut de partie, elle permet de setup le debut d'un fichier json
-     * @param data = information a rajouter au json
+     *
+     * @param data    = information a rajouter au json
      * @param player1 = joueur qui joue
      * @param player2 = joueur adverse
      */
@@ -84,6 +86,7 @@ public class Function {
 
     /**
      * Sert a inscrire le déplacement fait par un joueur dans la partie, elle est appelée a chaque tour
+     *
      * @param data = information a rajouter au json
      */
     public void appendDataToResult(String data) {
@@ -96,11 +99,15 @@ public class Function {
     }
 
     public boolean checkIfHisPions(char c1, Player player) {
-        for (char c2 : player.getLetter()) { if (c2 == c1) return false; }
+        for (char c2 : player.getLetter()) {
+            if (c2 == c1) return false;
+        }
         return true;
     }
 
-    /** Écrit dans le fichier a la fin de la partie */
+    /**
+     * Écrit dans le fichier a la fin de la partie
+     */
     public void writeFile() {
         FileWriter fileWritter;
         final String fileName = "src/meilleur/com/save/" + millisToDate() + ".json";
@@ -126,7 +133,7 @@ public class Function {
                 }
             }
             StringBuilder str = new StringBuilder();
-            for (char c: replastCharArr) {
+            for (char c : replastCharArr) {
                 str.append(c);
             }
             dataToWrite = str.toString();
@@ -136,6 +143,7 @@ public class Function {
     /**
      * vérifie dans le dossier des sauvegardes si il en existe.
      * Si des saves existes il les affiches et demande a l'utilisateur quel replay il veut regarder
+     *
      * @return Nom du fichier
      */
     public String printAllSave() {
@@ -162,8 +170,9 @@ public class Function {
 
     /**
      * modifie le nombre de deplacement d'un pion si l'input est mauvais
-     * @param str mouvement demandé
-     * @param p1 joueur qui joue
+     *
+     * @param str   mouvement demandé
+     * @param p1    joueur qui joue
      * @param lastX position du pion sur l'axe X
      * @param lastY position du pion sur l'axe Y
      * @return le déplacement modifier
@@ -188,8 +197,7 @@ public class Function {
         int result = 0;
         try {
             result = scanner.nextInt();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
@@ -197,12 +205,13 @@ public class Function {
 
     /**
      * compte le nombre de caractère qu'il y a dans une liste de char
+     *
      * @param chars texte ou faut compter le caractère
      * @return le nombre de caractère trouvé
      */
     private int countCharInString(char[] chars) {
         int i = 0;
-        for (char ch: chars) {
+        for (char ch : chars) {
             if (ch == ',') i++;
         }
         return i;
@@ -210,6 +219,7 @@ public class Function {
 
     /**
      * retourne un nom de fichier sous un format de type "dd-MM-yyyy 'a' kk-mm-ss"
+     *
      * @return nom du fichier
      */
     private String millisToDate() {
@@ -234,9 +244,9 @@ public class Function {
     public void waitTime(int milli, char state) {
         try {
             if (state == 'P') {
-                for (int i = 0; i < milli/400; i++) {
+                for (int i = 0; i < milli / 400; i++) {
                     System.out.print(". ");
-                    Thread.sleep(milli/5);
+                    Thread.sleep(milli / 5);
                 }
                 System.out.println('\n');
             }
