@@ -38,3 +38,4 @@ Puis pour jouer le fonctionnement du déplacement est le suivant
 Des fonctionnalités n'ont pas pu être réalisées :
 Le déplacement automatique des pions ou dames lorsqu'il peut réaliser une prise sur un pion adverse
 Les prises de pions multiples n'ont pas été implémentés
+Problèmes sur les prises de pions lorsque c'est une dame qui se déplace.
