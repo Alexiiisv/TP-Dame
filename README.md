@@ -35,7 +35,7 @@ Puis pour jouer le fonctionnement du déplacement est le suivant
 - Les deux premiers chiffres correspondent a la position du pion selectionné, ensuite un espace puis un chiffre qui donne le nombre de cases avancées puis la direction (top left - top right - bottom left - bottom right)
 
 #### Fonctionnalité non implémentés
-Des fonctionnalités n'ont pas pu être réalisées :
-Le déplacement automatique des pions ou dames lorsqu'il peut réaliser une prise sur un pion adverse
-Les prises de pions multiples n'ont pas été implémentés
-Problèmes sur les prises de pions lorsque c'est une dame qui se déplace.
+Des fonctionnalités n'ont pas pu être réalisées :<Br>
+- Le déplacement automatique des pions ou dames lorsqu'il peut réaliser une prise sur un pion adverse<Br>
+- Les prises de pions multiples n'ont pas été implémentés<Br>
+- Problèmes sur les prises de pions lorsque c'est une dame qui se déplace.
