@@ -63,9 +63,7 @@ public class Player {
      */
     public void initPion() {
         int y = id == 0 ? 0 : 6, x = 0;
-
         for (int i = 0; i < 21; i++) {
-
 
             if (y % 2 == 0 && x < 2) x = 1;
             if (y % 2 == 1 && x < 2) x = 0;
@@ -78,9 +76,9 @@ public class Player {
             if (i % 5 == 0 && x > 5) x = 0;
         }
 
-
         //if (this.id == 1) this.allPion.add(new Pion(this.letter[0], 2, 1));
         //if (this.id == 0) this.allPion.add(new Pion(this.letter[0], 3, 4));
+        //if (this.id == 0) this.allPion.add(new Pion(this.letter[0], 5, 4));
 
         this.lastPions = this.allPion.size();
     }
